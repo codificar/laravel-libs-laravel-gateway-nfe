@@ -1,16 +1,22 @@
 <?php
+namespace Codificar\GatewayNfe\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+
+//FormRequest
 use App\Http\Requests\ProviderCompanyFormRequest;
 use App\Http\Requests\ProviderCompanyAddressFormRequest;
 use App\Http\Requests\ProviderCompanyInfoFormRequest;
-use Illuminate\Http\Request;
-
-use App\Jobs\GenerateProviderNfeJob;
-
-use App\Models\Institution;
-use Carbon\Carbon;
 use App\Http\Requests\IssuerCompanyFormRequest;
-
-class ProviderCompanyController extends BaseController
+//Laravel uses
+use View;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+//Externals Models
+use Auth;
+//Internal Model
+use Codificar\GatewayNfe\Models\Company;
+class ProviderCompanyController extends Controller
 {	
 	/**
 	 * View to Create
@@ -19,16 +25,17 @@ class ProviderCompanyController extends BaseController
 	*/
 	 	
 	public function create($id = null){
-		if(Auth::guard('web')->user()->type = 'admin'){
-			$enviroment = 'admin';
-		}else{
-			$enviroment = 'provider';
-			$id = Auth::guard('web')->user()->id;
-		}
+		// if(Auth::guard('web')->user()->type = 'admin'){
+		// 	$enviroment = 'admin';
+		// }else{
+		// 	$enviroment = 'provider';
+		// 	$id = Auth::guard('web')->user()->id;
+		// }
+		$enviroment = 'admin';
 		//Has provider Company	
 		$providerCompany = Company::getProviderCompany($id);		
 		
-		return View::make('provider_company.add')
+		return View::make('gateway_nfe::provider_company.add')
 			->with('enviroment', $enviroment)
 			->with('providerId', $id)
 			->with('company', json_encode($providerCompany));

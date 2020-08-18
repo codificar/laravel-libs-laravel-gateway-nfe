@@ -1,5 +1,13 @@
 <?php
 
+namespace Codificar\GatewayNfe\Models;
+
+use Illuminate\Database\Eloquent\Relations\Model;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
+use Carbon\Carbon;
+use Eloquent;
+
 class Company extends Eloquent
 {
 	const ownerIssuer = 'issuer';
