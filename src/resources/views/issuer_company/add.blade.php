@@ -1,6 +1,4 @@
-<?php $layout = '.master'; ?>
-       
-@extends('layout'.$layout)
+@extends('layout.master')
 
 @section('breadcrumbs')
 <div class="row page-titles">
@@ -16,29 +14,22 @@
 @stop
 
 @section('content')
-	<div id="VueJs">
-		
-	<add_provider_company
+<div id="VueJs">
+
+	<add_issuer_company
 		Edit = "{{false}}"
-		Enviroment="{{ $enviroment }}"
-		Provider-id = "{{ $providerId }}"
-		Create-route = "{{ URL::Route($enviroment.'CreateProviderCompany', ['']) }}"
+		Enviroment="admin"
+		Create-route = "{{ URL::Route('issuerCompanyStore', ['']) }}"
 		Company = "{{ $company }}"		
 	>
-	</add_provider_company>
+	</add_issuer_company>
 	
-	<provider_company_certifie		
-		Enviroment="{{ $enviroment }}"
-		Provider-id = "{{ $providerId }}"
+	<issuer_company_certifie	
 		Company = "{{ $company }}"			
-		>
-	</provider_company_certifie>
-		
-	</div>
-		
-
-	</div>
-
+	>
+	</issuer_company_certifie>
+	
+</div>
 @stop
 
 @section('javascripts')
@@ -53,3 +44,4 @@
 <script src="{{ elixir('vendor/codificar/gateway_nfe/gateway_nfe.vue.js') }}"> </script> 
        
 @stop
+

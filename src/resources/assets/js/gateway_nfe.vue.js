@@ -2,7 +2,12 @@ window.vue = require('vue');
 require('lodash');
 import Vue from 'vue';
 import Vuelidate from 'vuelidate'
+import VueTheMask from 'vue-the-mask';
+import VueSweetalert2 from 'vue-sweetalert2';
+
+Vue.use(VueTheMask)
 Vue.use(Vuelidate)
+Vue.use(VueSweetalert2);
 
 //Issuer Company
 import AddIssuerCompany from './pages/issuer_company/add_company.vue';
