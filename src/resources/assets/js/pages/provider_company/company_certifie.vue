@@ -124,7 +124,7 @@ export default {
         
       } catch (error) {
         this.$swal({
-          title: "Erro ao Autenticar certificado",
+          title: "Erro ao trazer tipo de authenticação",
           type: "error",
         });
         return false;
@@ -136,9 +136,8 @@ export default {
     this.certifie.provider_id = this.ProviderId
      if(JSON.parse(this.Company)){      
       this.company = JSON.parse(this.Company)
-      this.has_company = true
-      
-      await this.getAuthType();
+      this.has_company = true      
+      // await this.getAuthType();
       if(this.company.isDocAuth){
         this.certifie.nome = this.company.digitalCertificateName
         this.certifie.dataVencimento = this.company.digitalExpirationDate

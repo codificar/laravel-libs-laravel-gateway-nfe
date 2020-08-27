@@ -1,4 +1,8 @@
 <?php
+namespace Codificar\GatewayNfe\Lib;
+
+//External Models
+use Settings;
 
 class NFEGatewayFactory {
 

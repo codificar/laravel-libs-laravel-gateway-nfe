@@ -2,12 +2,10 @@
 namespace Codificar\GatewayNfe\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-
+//Factory
+use Codificar\GatewayNfe\Lib\NFEGatewayFactory;
 //FormRequest
-use App\Http\Requests\ProviderCompanyFormRequest;
-use App\Http\Requests\ProviderCompanyAddressFormRequest;
-use App\Http\Requests\ProviderCompanyInfoFormRequest;
-use App\Http\Requests\IssuerCompanyFormRequest;
+use Codificar\GatewayNfe\Http\Requests\ProviderCompanyFormRequest;
 //Laravel uses
 use View;
 use Carbon\Carbon;
@@ -16,6 +14,7 @@ use Illuminate\Http\Request;
 use Auth;
 //Internal Model
 use Codificar\GatewayNfe\Models\Company;
+
 class ProviderCompanyController extends Controller
 {	
 	/**
@@ -58,7 +57,7 @@ class ProviderCompanyController extends Controller
 	 */
 	public function store(ProviderCompanyFormRequest $request){	
 		//Save on database
-		$providerCompany = Company::store($request);	
+		$providerCompany = [];	
 	
 		//Create Gateway		
 		$gateway = NFEGatewayFactory::createGateway();
@@ -357,7 +356,7 @@ class ProviderCompanyController extends Controller
 	 * @param String   $document
      * @param String   $municipalRegistration      
      * @param String   $razaoSocial 
-     * @param String   $nomeFantasia      
+     * @param String   $fantasyName      
      * @param Array    $address [estate, city, place, number, neighborhood, zipcode, complement, ibgeCode]
      * @param Bool     $nationalSimpleOptant Default True     
      * @param Bool     $culturalPromoter   Default False
@@ -392,7 +391,7 @@ class ProviderCompanyController extends Controller
 	 * Update API
 	 * @param String   $document
      * @param String   $municipalRegistration      
-     * @param String   $razaoSocial 
+     * @param String   $socialReason 
      * @param String   $nomeFantasia      
      * @param Array    $address [estate, city, place, number, neighborhood, zipcode, complement, ibgeCode]
      * @param Bool     $nationalSimpleOptant Default True     

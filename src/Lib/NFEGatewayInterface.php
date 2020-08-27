@@ -1,4 +1,5 @@
 <?php 
+namespace Codificar\GatewayNfe\Lib;
 
 interface NFEGatewayInterface
 {

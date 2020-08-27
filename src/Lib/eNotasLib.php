@@ -1,4 +1,5 @@
 <?php
+namespace Codificar\GatewayNfe\Lib;
 
 require base_path('vendor/enotas/php-client/src/eNotasGW.php');
 
