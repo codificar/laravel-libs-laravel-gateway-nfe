@@ -5,10 +5,15 @@
         "name": "Codificar",
         "email": "libs@codificar.com.br"
     }],
-    "require": {},
+    "require": {
+        "enotas/php-client": "^1.0"
+    },
     "autoload": {
         "psr-4": {
             "Codificar\\GatewayNfe\\": "src/"
-        }
+        },
+        "classmap": [
+            "../../vendor/enotasl"
+        ]
     }
 }

@@ -151,9 +151,10 @@ class Company extends Eloquent
 	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function updateCompany($request, $owner = Company::ownerProvider){
-		if($owner = Company::ownerIssuer){
+		
+		if($owner == Company::ownerIssuer){
 			$providerCompany = Company::where("owner", Company::ownerIssuer)->first();
-		}else{
+		}else{			
 			$providerCompany = Company::where("provider_id", $request->provider_id)->first();
 		}
 		

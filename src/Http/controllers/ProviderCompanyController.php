@@ -57,8 +57,8 @@ class ProviderCompanyController extends Controller
 	 */
 	public function store(ProviderCompanyFormRequest $request){	
 		//Save on database
-		$providerCompany = [];	
-	
+		$providerCompany = Company::store($request);	
+		
 		//Create Gateway		
 		$gateway = NFEGatewayFactory::createGateway();
 
@@ -253,22 +253,32 @@ class ProviderCompanyController extends Controller
 	 *  * @param $password
 	 * @return \Illuminate\Http\JsonResponse
 	*/
-	public function authLogin(){		
+	public function authLogin(Request $request){	
 		$responseArray = array(
 			'data' => null,
 			'sucess' => true,			
 		);		
 		try {
-			$provider_id = Input::get('provider_id');	
-			$login = Input::get('login');	
-			$password = Input::get('password');
+			$provider_id = $request->provider_id;	
+			$login = $request->login;
+			$password = $request->password;
 
-			$providerCompany = Company::where('provider_id', $provider_id)->first();
-			$eNotas = new eNotasLib;				
-			$responseArray = $eNotas->loginAuth($providerCompany->gateway_company_id, $login, $password);
+			//Get Company
+			$company = Company::where('provider_id', $provider_id)->first();
+
+			//Create Gateway		
+			$gateway = NFEGatewayFactory::createGateway();
+
+			//GET on Gateway
+			$responseArray = $gateway->loginAuthCompany($company, $login, $password);
+
 			if($responseArray['sucess']){
-					$providerCompany->is_login_auth = true;
-					$providerCompany->save();
+				//Set Login Auth True
+				$company->is_login_auth = true;
+				$company->save();
+			}else {				
+				$company->is_login_auth = false;
+				$company->save();				
 			}				
 		} catch (Exception $error) {
 			$responseArray["data"] = $error->getMessage();
@@ -470,26 +480,36 @@ class ProviderCompanyController extends Controller
 	 *  * @param $password
 	 * @return \Illuminate\Http\JsonResponse
 	*/
-	public function issuerAuthLogin(){		
+	public function issuerAuthLogin(){	
 		$responseArray = array(
 			'data' => null,
 			'sucess' => true,			
-		);		
-		try {	
-			$login = Input::get('login');	
-			$password = Input::get('password');
+		);
+		try {
+			$provider_id = $request->provider_id;	
+			$login = $request->login;
+			$password = $request->password;
 
+			//Get Company
 			$company = Company::getIssuerCompany();	
-			$eNotas = new eNotasLib;				
-			$responseArray = $eNotas->loginAuth($company->gateway_company_id, $login, $password);
+
+			//Create Gateway		
+			$gateway = NFEGatewayFactory::createGateway();
+
+			//GET on Gateway
+			$responseArray = $gateway->loginAuthCompany($company, $login, $password);
+
 			if($responseArray['sucess']){
-					$company->is_login_auth = true;
-					$company->save();
+				//Set Login Auth True
+				$company->is_login_auth = true;
+				$company->save();
+			}else {				
+				$company->is_login_auth = false;
+				$company->save();				
 			}				
 		} catch (Exception $error) {
 			$responseArray["data"] = $error->getMessage();
 			$responseArray["sucess"] = false;
-		}			
-		return $responseArray;
+		}	
 	}
 }

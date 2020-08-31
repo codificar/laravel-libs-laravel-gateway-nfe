@@ -46,6 +46,19 @@ interface NFEGatewayInterface
     public function updateCompany(Company $providerCompany); 
 
     /**
+     * Login Auth Company
+     *
+     * @param Company   $providerCompany
+     * @param String   $login
+     * @param String   $password
+   
+     * 
+     * @return Array ['success', 'data']
+     * @return Array ['success', 'data', 'error]
+    */    
+    public function loginAuthCompany(Company $providerCompany, $login, $password); 
+
+    /**
      * Get Company
      *
      * @param gateway_company_id   $gateway_company_id    

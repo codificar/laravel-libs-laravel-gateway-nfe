@@ -88,8 +88,9 @@ export default {
    async loginCompany() {
       try {       
         this.auth.provider_id = this.ProviderId
+        console.log("BODY", this.auth);
         const {data} = await axios.post("/admin/provider/company/login", this.auth); 
-       
+        console.log("data", data);
         if (data.sucess) {
           this.$swal({
             title: "Empresa autenticada com sucesso",

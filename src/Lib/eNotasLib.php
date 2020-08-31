@@ -1,12 +1,19 @@
 <?php
+
 namespace Codificar\GatewayNfe\Lib;
 
 require base_path('vendor/enotas/php-client/src/eNotasGW.php');
 
+
+use eNotasGW;
 use eNotasGW\Api\Exceptions as Exceptions;
 use eNotasGW\Api\fileParameter as fileParameter;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
+
+//Internal Model
+use Codificar\GatewayNfe\Models\NFESettings;
+use Codificar\GatewayNfe\Models\Company;
 /**
  * Classe usada para implementar o https://github.com/eNotasGW/php-client
  *
@@ -39,24 +46,24 @@ class eNotasLib
     {
         //Trazer da tabela settings
         $this->eNotas = eNotasGW::configure(array(
-            'apiKey' => Settings::getEnotasApiKey()
+            'apiKey' => NFESettings::getEnotasApiKey()
         ));		
-		$this->environment = Settings::getEnotasEnv();
+		$this->environment = NFESettings::getEnotasEnv();
 	}
 	
 
-	public function createCompany(Company $company){	
+	public function createCompany(Company $company){		
 		$responseData = array('data' => [], 'sucess' => true); 
 		try {			
 			$caracteristicasPrefeitura = eNotasGW::$PrefeituraApi->consultar($company->ibge_code);		
 			$dadosEmpresa = array(						
 				'cnpj' => $company->document,
-				'municipalRegistration' => $company->municipal_registration,
-				'estadualRegistration' => $company->estadual_registration,
+				'inscricaoMunicipal' => $company->municipal_registration,
+				'inscricaoEstadual' => $company->estadual_registration,
 				'razaoSocial' => $company->social_reason,
 				'nomeFantasia' => $company->fantasy_name,
-				'nationalSimpleOptant' => $company->national_simple_optant == 1 ? true : false,
-				'culturalPromoter' => $company->cultural_promoter == 1 ? true : false,			
+				'optanteSimplesNacional' => $company->national_simple_optant == 1 ? true : false,
+				'incentivadorCultural' => $company->cultural_promoter == 1 ? true : false,			
 				'email' => $company->commercial_email,
 				'telefoneComercial' => $company->commercial_phone,
 				'endereco' => array(
@@ -83,7 +90,7 @@ class eNotasLib
 					'sequencialLoteNFe' => 1
 				)
 			);			
-		
+			
 			if($caracteristicasPrefeitura->usaCNAE) {
 				$dadosEmpresa['cnae'] = '1813099';
 			}
@@ -130,12 +137,12 @@ class eNotasLib
 			$dadosEmpresa = array(		
 				'id' => $company->gateway_company_id,			
 				'cnpj' => $company->document,
-				'municipalRegistration' => $company->municipal_registration,
-				'estadualRegistration' => $company->estadual_registration,
+				'inscricaoMunicipal' => $company->municipal_registration,
+				'inscricaoEstadual' => $company->estadual_registration,
 				'razaoSocial' => $company->social_reason,
 				'nomeFantasia' => $company->fantasy_name,
-				'nationalSimpleOptant' => $company->national_simple_optant == 1 ? true : false,
-				'culturalPromoter' => $company->cultural_promoter == 1 ? true : false,			
+				'optanteSimplesNacional' => $company->national_simple_optant == 1 ? true : false,
+				'incentivadorCultural' => $company->cultural_promoter == 1 ? true : false,			
 				'email' => $company->commercial_email,
 				'telefoneComercial' => $company->commercial_phone,
 				'endereco' => array(
@@ -204,7 +211,7 @@ class eNotasLib
 			//cria instância para chamada			
 			$response = $client->request("GET", "https://api.enotasgw.com.br/v1/empresas/".$gateway_company_id, [
 			'headers' => [
-				'Authorization'     =>  "Basic ".Settings::getEnotasApiKey()
+				'Authorization'     =>  "Basic ".NFESettings::getEnotasApiKey()
 				]
 			]);					
 			$xml = $response->getBody()->getContents();
@@ -228,12 +235,13 @@ class eNotasLib
 		}
 		return $responseData;
 	}
-	//Login é o CNPJ sem pontuação
-	public function loginAuth($company_id, $login, $password) { 			
+
+	
+	public function loginAuthCompany(Company $company, $login, $password) { 			
 		$responseData = array('data' => [], 'sucess' => true); 		
         try {	
 				
-			$dadosEmpresa['id'] = $company_id;			
+			$dadosEmpresa['id'] = $company->gateway_company_id;			
 			$dadosEmpresa['configuracoesNFSeProducao']['usuarioAcessoProvedor'] = $login;
 			$dadosEmpresa['configuracoesNFSeProducao']['senhaAcessoProvedor'] = $password;			
 			//opcional, preencher apenas se for emitir em ambiente de homologação
@@ -264,7 +272,7 @@ class eNotasLib
 			$responseData['error'] = $ex->getMessage(); 			
 		}
 		return $responseData;
-	}
+	}	
 
 	public function setCompanyCertifie($certifie_file_path, $pass, $companyId) { 			
 		$client = new \GuzzleHttp\Client();
@@ -273,7 +281,7 @@ class eNotasLib
 			
 			$response = $client->request('POST', 'https://api.enotasgw.com.br/v1/empresas/'.$companyId.'/certificadoDigital', [
 				'headers' => [
-					'Authorization'     =>  "Basic ".Settings::getEnotasApiKey()
+					'Authorization'     =>  "Basic ".NFESettings::getEnotasApiKey()
 				],
 				'multipart' => [
 					[
@@ -357,7 +365,7 @@ class eNotasLib
 			
 			$response = $client->request('GET', 'https://api.enotasgw.com.br/v1/empresas/'.$companyId.'/nfes/porIdExterno/'.$requestId, [
 				'headers' => [
-					'Authorization'     =>  "Basic ".Settings::getEnotasApiKey()
+					'Authorization'     =>  "Basic ".NFESettings::getEnotasApiKey()
 				]
 			]);			
 				
