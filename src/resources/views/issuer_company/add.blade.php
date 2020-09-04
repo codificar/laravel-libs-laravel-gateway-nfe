@@ -19,7 +19,7 @@
 	<add_issuer_company
 		Edit = "{{false}}"
 		Enviroment="admin"
-		Create-route = "{{ URL::Route('issuerCompanyStore', ['']) }}"
+		Create-route = "{{ URL::Route('issuerCompanyStore') }}"
 		Company = "{{ $company }}"		
 	>
 	</add_issuer_company>

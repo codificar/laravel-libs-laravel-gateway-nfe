@@ -4,13 +4,13 @@
 Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Controllers'], function(){	
     Route::group(['prefix' => '/issuer/company'], function(){
          //Company      
-         Route::get('/create', array('as' => 'issuerCreateProviderCompany', 'uses' => 'ProviderCompanyController@issuerCreate'));
-         Route::post('/store', array('as' => 'issuerCompanyStore', 'uses' => 'ProviderCompanyController@issuerStore'));                 
-         Route::post('/update', array('as' => 'adminCompanyUpdate', 'uses' => 'ProviderCompanyController@issuerUpdate')); 
+         Route::get('/create', array('as' => 'issuerCreateProviderCompany', 'uses' => 'IssuerCompanyController@create'));
+         Route::post('/store', array('as' => 'issuerCompanyStore', 'uses' => 'IssuerCompanyController@store'));                 
+         Route::post('/update', array('as' => 'issuerCompanyUpdate', 'uses' => 'IssuerCompanyController@update')); 
  
          //Certifie
-         Route::post('/certified', array('as' => 'issuerSetCompanyCertifie', 'uses' => 'ProviderCompanyController@setIssuerCompanyCertifie'));           
-         Route::post('/login', array('as' => 'issuerGetAuthType', 'uses' => 'ProviderCompanyController@issuerAuthLogin'));    
+         Route::post('/certified', array('as' => 'issuerSetCompanyCertifie', 'uses' => 'IssuerCompanyController@setCompanyCertifie'));           
+         Route::post('/login', array('as' => 'issuerGetAuthType', 'uses' => 'IssuerCompanyController@authLogin'));    
     });
     	
     Route::group(['prefix' => '/provider/company'], function(){

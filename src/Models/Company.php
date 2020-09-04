@@ -39,6 +39,8 @@ class Company extends Eloquent
 	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function store($request, $owner = Company::ownerProvider){
+
+		
 		$providerCompany = new Company;
 		$providerCompany->provider_id = $request->provider_id;
 		
@@ -61,6 +63,8 @@ class Company extends Eloquent
 		$providerCompany->estadual_registration = $request->estadualRegistration;
 		$providerCompany->commercial_email = $request->commercialEmail;
 		$providerCompany->commercial_phone = $request->commercialPhone;
+
+		$providerCompany->owner = $owner;
 
 		$providerCompany->save();
 		

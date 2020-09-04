@@ -85,4 +85,53 @@ class NFESettings extends Settings
 		else
 			return "Serviço de Motoboy";
 	}
+
+
+	public function getIssuerData()
+	{
+		return [
+			'name' => self::findByKey('issuer_name'),
+			'document' => self::findByKey('issuer_document'),
+			'zipcode' => self::findByKey('issuer_zipcode'),
+			'address' => self::findByKey('issuer_address'),
+			'email' => self::findByKey('issuer_email'),
+			'site' => self::findByKey('issuer_site'),
+			'phone' => self::findByKey('issuer_phone'),
+		];
+	}
+	// Issuer Set Settings
+	public function setIssuerName($value)
+	{
+		Settings::where('key', 'issuer_name')->update(['value' => $value]);
+	}
+
+	public function setIssuerDocument($value)
+	{
+		Settings::where('key', 'issuer_document')->update(['value' => $value]);
+	}
+
+	public function setIssuerZipcode($value)
+	{
+		Settings::where('key', 'issuer_zipcode')->update(['value' => $value]);
+	}
+
+	public function setIssuerAddress($value)
+	{
+		Settings::where('key', 'issuer_address')->update(['value' => $value]);
+	}
+
+	public function setIssuerEmail($value)
+	{
+		Settings::where('key', 'issuer_email')->update(['value' => $value]);
+	}
+
+	public function setIssuerSite($value)
+	{
+		Settings::where('key', 'issuer_site')->update(['value' => $value]);
+	}
+
+	public function setIssuerPhone($value)
+	{
+		Settings::where('key', 'issuer_phone')->update(['value' => $value]);
+	}
 }

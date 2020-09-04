@@ -151,7 +151,8 @@ export default {
     },
 
     async submitForm() {
-        const { data } = await axios.post("/admin/issuer/company/store", this.company);
+        const { data } = await axios.post(this.CreateRoute, this.company);
+      
         if (data.sucess) {
           this.$swal({
             title: "Empresa Registrada com sucesso",

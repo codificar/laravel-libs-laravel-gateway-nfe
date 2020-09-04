@@ -39,4 +39,8 @@ return [
 	'password'		=>	'Senha',
 	'name'		=>	'Nome',
 	'valid_date'		=>	'Valido até',
+
+	//Issuer
+	"document_company_required" 		=> "Documento é obrigatório",
+	"document_company_unique" 			=> "Documento já cadastrado",
 ];
