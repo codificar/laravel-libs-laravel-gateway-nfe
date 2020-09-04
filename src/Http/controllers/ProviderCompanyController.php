@@ -300,45 +300,9 @@ class ProviderCompanyController extends Controller
 	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function getNfe(){
-		// //Create Gateway	
-		
-		$service = array(
-			'descricao' => Settings::getNfeServiceDescription()
-		);
-		//Get interval to search
-		$now = "2019/04/01";
-		$latMonth = "2020/08/01";
+		//Create Gateway		
+		$gateway = NFEGatewayFactory::createGateway();
 
-		// //Get users and institutions
-		$providers = Provider::getProvidersByRequestsInterval($now, $latMonth);
-		$users = User::getUsersByRequestsInterval($now, $latMonth);
-		$institutions = Institution::getInstitutionByRequestsInterval($now, $latMonth);
-		
-		//Users Generate NFE
-		GatewayNFE::emmitProviderToUserNfe($providers, $users, $service, $now, $latMonth);
-       
-		//institutions Generate NFE
-		GatewayNFE::emmitProviderToInstitutionNfe($providers, $institutions, $service, $now, $latMonth);
-		return "OK";
-
-		// $client = array(
-		// 	'nome' => 'Codificar Codificar Sistemas',
-		// 	'email' => 'delivery@codificar.com.br',
-		// 	'cpfCnpj' => '05957264000151',
-		// 	'tipoPessoa' => 'J',
-		// 	'endereco' => array(
-		// 		'uf' => 'MG', 
-		// 		'cidade' => 'Belo Horizonte',
-		// 		'logradouro' => 'Rua dos Goitacazes',
-		// 		'numero' => '375',
-		// 		'bairro' => 'Centro',
-		// 		'cep' => '30190050'
-		// 	)
-		// );
-
-		// $gateway = NFEGatewayFactory::createGateway();	
-		// $response = $gateway->generateNfe("External312", "ecda2c6f-333a-4130-8eba-0c01452f0600", $client, $service, 10);
-		// return $response;
 		//GET NFE on Gateway
 		$gatewayResponse = $gateway->getNfeByRequestId("ecda2c6f-333a-4130-8eba-0c01452f0600", 142);	
 		

@@ -1,6 +1,6 @@
 <?php
 //Admin
-// Route::group(['prefix' => '/admin', 'middleware' => 'auth.admin'], function(){	
+// Route::group(['middleware' => 'auth.admin'], function(){	
 Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Controllers'], function(){	
     Route::group(['prefix' => '/issuer/company'], function(){
          //Company      
@@ -31,6 +31,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Co
         Route::post('/nfe', array('as' => 'getNfe', 'uses' => 'ProviderCompanyController@getNfe'));
     });	
 });
+// });
 
 //Provider API
 // Route::group(['prefix' => '/api/v1/provider/company', 'middleware' => 'auth.provider_api:api'], function () {

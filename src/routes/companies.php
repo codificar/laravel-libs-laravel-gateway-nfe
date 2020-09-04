@@ -1,6 +1,6 @@
 <?php
 //Admin
-// Route::group(['prefix' => '/admin', 'middleware' => 'auth.admin'], function(){	
+Route::group(['prefix' => '/admin', 'middleware' => 'auth.admin'], function(){	
 Route::group(['prefix' => '/admin'], function(){	
     Route::group(['prefix' => '/issuer/company'], function(){
          //Company      
@@ -30,6 +30,7 @@ Route::group(['prefix' => '/admin'], function(){
         Route::post('/nfe/generate', array('as' => 'adminSetCompanyCertifie', 'uses' => 'ProviderCompanyController@generateNfe'));  
         Route::post('/nfe', array('as' => 'getNfe', 'uses' => 'ProviderCompanyController@getNfe'));
     });	
+});
 });
 
 //Provider API
