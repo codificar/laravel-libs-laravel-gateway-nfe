@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Codificar\GatewayNfe\Lib\NFEGatewayFactory;
 //FormRequest
 use Codificar\GatewayNfe\Http\Requests\ProviderCompanyFormRequest;
+use Codificar\GatewayNfe\Http\Requests\ProviderCompanyInfoFormRequest;
+use Codificar\GatewayNfe\Http\Requests\ProviderCompanyAddressFormRequest;
 //Laravel uses
 use View;
 use Carbon\Carbon;
@@ -136,13 +138,13 @@ class ProviderCompanyController extends Controller
 	public function update(ProviderCompanyFormRequest $request){
 		//Update on database
 		$providerCompany = Company::updateCompany($request);	
-	
+		
 		//Create Gateway		
 		$gateway = NFEGatewayFactory::createGateway();
 
 		//Update on Gateway
 		$gatewayResponse = $gateway->updateCompany($providerCompany);
-
+		
 		return response()->json($gatewayResponse);
 	}
 

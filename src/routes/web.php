@@ -34,7 +34,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Co
 });
 
 //Provider API
-// Route::group(['prefix' => '/api/v1/provider/company', 'middleware' => 'auth.provider_api:api'], function () {
+Route::group(['prefix' => '/api/v1/provider/company', 'middleware' => 'auth.provider_api:api', 'namespace' => 'Codificar\GatewayNfe\Http\Controllers'], function () {
     Route::get('/{id}', array('as' => 'providerApiGetProviderCompany', 'uses' => 'ProviderCompanyController@getProviderCompany'));   
     Route::post('/store/address', array('as' => 'providerApiCompanyStore', 'uses' => 'ProviderCompanyController@storeAddress'));
     Route::post('/store/info', array('as' => 'providerApiCompanyStore', 'uses' => 'ProviderCompanyController@storeInfo'));
@@ -42,7 +42,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Co
 
     Route::post('/auth/certified', array('as' => 'providerApiSetCompanyCertifie', 'uses' => 'ProviderCompanyController@setCompanyCertifie'));
     Route::post('/auth/login', array('as' => 'providerApiGetAuthType', 'uses' => 'ProviderCompanyController@authLogin'));  
-// });	
+});	
 
 /**
  * Rota para permitir utilizar arquivos de traducao do laravel (dessa lib) no vue js
