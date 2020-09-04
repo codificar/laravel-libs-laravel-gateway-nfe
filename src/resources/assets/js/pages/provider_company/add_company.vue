@@ -10,7 +10,7 @@ import {
 } from "vuelidate/lib/validators";
 
 export default {
-  props: ["Edit", "Enviroment", "ProviderId", "CreateRoute", "Company"],
+  props: ["Edit", "Enviroment", "ProviderId", "CreateRoute", "UpdateRoute", "Company"],
   data() {
     return {     
       has_company: false,
@@ -132,16 +132,15 @@ export default {
 
     async updateCompany() {
         this.company.provider_id = this.provider_id
-        console.log("company", this.company);
-        const { data } = await axios.post("/admin/provider/company/update", this.company);
-        console.log("data", data);
+       
+        const {data} = await axios.post("/admin/provider/company/update", this.company);
+      
         if (data.sucess) {
           this.$swal({
             title: "Empresa Atualizada com sucesso",
             type: "success",
           });
-          window.location.href =
-            "/admin/provider/company/create/" + this.provider_id;
+          window.location.reload()
         } else {
           this.$swal({
             title: data.error_code,
@@ -154,15 +153,14 @@ export default {
 
     async submitForm() {
         this.company.provider_id = this.provider_id
-        const { data } = await axios.post("/admin/provider/company/store", this.company);
+        const { data } = await axios.post(this.CreateRoute, this.company);
       
         if (data.sucess) {
           this.$swal({
             title: "Empresa Registrada com sucesso",
             type: "success",
           });
-          window.location.href =
-            "/admin/provider/company/create/" + this.provider_id;
+          window.location.reload()
         } else {
           this.$swal({
             title: data.error_code,
@@ -179,7 +177,7 @@ export default {
     this.provider_id = this.ProviderId;
     await this.getAddressUf();
     
-    if (JSON.parse(this.Company)) {  
+    if (this.Company) {  
       this.has_company = true;
       this.company = JSON.parse(this.Company);       
       this.company.nationalSimpleOptant ? this.company.nationalSimpleOptant = true : this.company.nationalSimpleOptant = false

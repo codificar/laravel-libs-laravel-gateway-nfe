@@ -22,7 +22,8 @@
 		Edit = "{{false}}"
 		Enviroment="{{ $enviroment }}"
 		Provider-id = "{{ $providerId }}"
-		Create-route = "{{ URL::Route($enviroment.'CreateProviderCompany', ['']) }}"
+		Create-route = "{{ URL::Route($enviroment.'CompanyStore') }}"
+		Update-route = "{{ URL::Route($enviroment.'CompanyUpdate') }}"
 		Company = "{{ $company }}"		
 	>
 	</add_provider_company>

@@ -20,12 +20,15 @@
 		Edit = "{{false}}"
 		Enviroment="admin"
 		Create-route = "{{ URL::Route('issuerCompanyStore') }}"
+		Update-route = "{{ URL::Route('issuerCompanyUpdate') }}"
 		Company = "{{ $company }}"		
 	>
 	</add_issuer_company>
 	
 	<issuer_company_certifie	
 		Company = "{{ $company }}"			
+		Login-auth-route = "{{ URL::Route('issuerLoginAuth') }}"
+		Certifie-auth-route = "{{ URL::Route('issuerSetCompanyCertifie') }}"
 	>
 	</issuer_company_certifie>
 	

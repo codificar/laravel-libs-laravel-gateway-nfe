@@ -9,7 +9,7 @@ import {
 } from "vuelidate/lib/validators";
 
 export default {
-  props: ["Company"],
+  props: ["Company", "LoginAuthRoute", "CertifieAuthRoute"],
   data() {
     return {
       //tipoAutenticacao
@@ -55,10 +55,11 @@ export default {
     },
     async companyCertifie() {
       try {
+        console.log("ROUTE", this.CertifieAuthRoute);
         let formData = new FormData();
         formData.append('certified', this.certifie.certified);
         formData.append('pass', this.certifie.pass);
-        const {data} = await axios.post("/admin/issuer/company/certified", formData);       
+        const {data} = await axios.post(this.CertifieAuthRoute, formData);       
         if (data.sucess) {
           this.$swal({
             title: data.data,
@@ -82,15 +83,14 @@ export default {
     },
 
    async loginCompany() {
-      try {       
-        const {data} = await axios.post("/admin/issuer/company/login", this.auth); 
-       
+      try {              
+        const {data} = await axios.post(this.LoginAuthRoute, this.auth); 
         if (data.sucess) {
           this.$swal({
             title: "Empresa autenticada com sucesso",
             type: "success",
           });
-          window.location.href = '/admin/issuer/company/create'
+          window.location.reload()
         } else {
           this.$swal({
             title: "Valores invalidos",
@@ -109,6 +109,7 @@ export default {
     }
   },
   async mounted() {  
+    console.log("this.Company",this.Company);
      if(JSON.parse(this.Company)){      
       this.company = JSON.parse(this.Company)
       this.has_company = true
@@ -150,6 +151,7 @@ export default {
                         type="text"
                         id="login"
                         class="form-control"
+                        v-model="auth.login"
                       />
                       <div class="error" v-if="!$v.auth.login.required">
                         {{ trans('gateway_nfe.required_error') }}
@@ -158,7 +160,7 @@ export default {
 
                     <div class="col-md-2 form-group">
                       <label class="control-label">{{trans('gateway_nfe.password')}}*</label>
-                      <input type="password" id="auth_pass" v-model="certifie.pass" class="form-control" />
+                      <input type="password" id="auth_pass" v-model="auth.password" class="form-control" />
                       <div class="error" v-if="!$v.auth.password.required">
                         {{ trans('gateway_nfe.required_error') }}
                       </div>

@@ -10,7 +10,7 @@ import {
 } from "vuelidate/lib/validators";
 
 export default {
-  props: ["Edit", "Enviroment", "CreateRoute", "Company"],
+  props: ["Edit", "Enviroment", "CreateRoute", "UpdateRoute", "Company"],
   data() {
     return {     
       has_company: false,
@@ -131,7 +131,7 @@ export default {
     },
 
     async updateCompany() {
-        const { data } = await axios.post("/admin/issuer/company/update", this.company);
+        const { data } = await axios.post(this.UpdateRoute, this.company);
         console.log("data", data);
         if (data.sucess) {
           this.$swal({

@@ -58,6 +58,19 @@ interface NFEGatewayInterface
     */    
     public function loginAuthCompany(Company $providerCompany, $login, $password); 
 
+     /**
+     * Certifie Auth Company
+     *
+     * @param Company  $providerCompany
+     * @param String   $certifie_file_path
+     * @param String   $password
+   
+     * 
+     * @return Array ['success', 'data']
+     * @return Array ['success', 'data', 'error]
+    */    
+    public function setCompanyCertifie(Company $providerCompany, $certifie_file_path, $password);
+
     /**
      * Get Company
      *

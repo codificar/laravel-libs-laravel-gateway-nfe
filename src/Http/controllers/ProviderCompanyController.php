@@ -163,17 +163,22 @@ class ProviderCompanyController extends Controller
 				$certifie_file_path = base_path()."/company_certifie/".$file_name . "." . $ext;
 
 				$pass = $request->input('pass');
-				$provider_id = $request->input('provider_id');		
-				$providerCompany = Company::where('provider_id', $provider_id)->first();
-				$eNotas = new eNotasLib;
-				$responseData =  $eNotas->setCompanyCertifie($certifie_file_path, $pass, $providerCompany->gateway_company_id);	
+				$provider_id = $request->input('provider_id');	
+				//Get Company	
+				$company = Company::where('provider_id', $provider_id)->first();
+
+				//Create Gateway		
+				$gateway = NFEGatewayFactory::createGateway();
+
+				$responseData =  $gateway->setCompanyCertifie($company, $certifie_file_path, $pass);	
+					
 				//Update On Database
 				if($responseData['sucess']){
 					if($responseData['xml']){
-						$providerCompany->digital_certificate_name = $responseData['xml']->nome;	
-						$providerCompany->digital_expiration_date = $responseData['xml']->dataVencimento;	
-						$providerCompany->is_doc_auth = true;	
-						$providerCompany->save();
+						$company->digital_certificate_name = $responseData['xml']->nome;	
+						$company->digital_expiration_date = $responseData['xml']->dataVencimento;	
+						$company->is_doc_auth = true;	
+						$company->save();
 					}					
 				}
 									

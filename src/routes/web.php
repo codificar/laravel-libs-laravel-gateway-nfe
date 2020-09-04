@@ -1,6 +1,6 @@
 <?php
 //Admin
-// Route::group(['middleware' => 'auth.admin'], function(){	
+Route::group(['middleware' => 'auth.admin'], function(){	
 Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Controllers'], function(){	
     Route::group(['prefix' => '/issuer/company'], function(){
          //Company      
@@ -10,7 +10,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Co
  
          //Certifie
          Route::post('/certified', array('as' => 'issuerSetCompanyCertifie', 'uses' => 'IssuerCompanyController@setCompanyCertifie'));           
-         Route::post('/login', array('as' => 'issuerGetAuthType', 'uses' => 'IssuerCompanyController@authLogin'));    
+         Route::post('/login', array('as' => 'issuerLoginAuth', 'uses' => 'IssuerCompanyController@authLogin'));    
     });
     	
     Route::group(['prefix' => '/provider/company'], function(){
@@ -24,24 +24,24 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Co
         //Certifie
         Route::post('/certified', array('as' => 'adminSetCompanyCertifie', 'uses' => 'ProviderCompanyController@setCompanyCertifie'));           
         Route::post('/auth', array('as' => 'adminGetAuthType', 'uses' => 'ProviderCompanyController@getAuthType'));    
-        Route::post('/login', array('as' => 'adminGetAuthType', 'uses' => 'ProviderCompanyController@authLogin'));       
+        Route::post('/login', array('as' => 'adminLoginAuth', 'uses' => 'ProviderCompanyController@authLogin'));       
 
         //NFE
         Route::post('/nfe/generate', array('as' => 'adminSetCompanyCertifie', 'uses' => 'ProviderCompanyController@generateNfe'));  
         Route::post('/nfe', array('as' => 'getNfe', 'uses' => 'ProviderCompanyController@getNfe'));
     });	
 });
-// });
+});
 
 //Provider API
 // Route::group(['prefix' => '/api/v1/provider/company', 'middleware' => 'auth.provider_api:api'], function () {
-    Route::get('/{id}', array('as' => 'adminGetProviderCompany', 'uses' => 'ProviderCompanyController@getProviderCompany'));   
-    Route::post('/store/address', array('as' => 'adminCompanyStore', 'uses' => 'ProviderCompanyController@storeAddress'));
-    Route::post('/store/info', array('as' => 'adminCompanyStore', 'uses' => 'ProviderCompanyController@storeInfo'));
-    Route::post('/update', array('as' => 'adminCompanyUpdate', 'uses' => 'ProviderCompanyController@update'));
+    Route::get('/{id}', array('as' => 'providerApiGetProviderCompany', 'uses' => 'ProviderCompanyController@getProviderCompany'));   
+    Route::post('/store/address', array('as' => 'providerApiCompanyStore', 'uses' => 'ProviderCompanyController@storeAddress'));
+    Route::post('/store/info', array('as' => 'providerApiCompanyStore', 'uses' => 'ProviderCompanyController@storeInfo'));
+    Route::post('/update', array('as' => 'providerApiCompanyUpdate', 'uses' => 'ProviderCompanyController@update'));
 
-    Route::post('/auth/certified', array('as' => 'adminSetCompanyCertifie', 'uses' => 'ProviderCompanyController@setCompanyCertifie'));
-    Route::post('/auth/login', array('as' => 'adminGetAuthType', 'uses' => 'ProviderCompanyController@authLogin'));  
+    Route::post('/auth/certified', array('as' => 'providerApiSetCompanyCertifie', 'uses' => 'ProviderCompanyController@setCompanyCertifie'));
+    Route::post('/auth/login', array('as' => 'providerApiGetAuthType', 'uses' => 'ProviderCompanyController@authLogin'));  
 // });	
 
 /**

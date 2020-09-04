@@ -122,7 +122,7 @@ class IssuerCompanyController extends Controller
 	 *  * @param $password
 	 * @return \Illuminate\Http\JsonResponse
 	*/
-	public function authLogin(){	
+	public function authLogin(Request $request){	
 		$responseArray = array(
 			'data' => null,
 			'sucess' => true,			
@@ -133,14 +133,14 @@ class IssuerCompanyController extends Controller
 			$password = $request->password;
 
 			//Get Company
-			$company = Company::getIssuerCompany();	
+			$company = Company::where("owner", Company::ownerIssuer)->first();
 
 			//Create Gateway		
 			$gateway = NFEGatewayFactory::createGateway();
 
 			//GET on Gateway
 			$responseArray = $gateway->loginAuthCompany($company, $login, $password);
-
+			
 			if($responseArray['sucess']){
 				//Set Login Auth True
 				$company->is_login_auth = true;
@@ -153,6 +153,7 @@ class IssuerCompanyController extends Controller
 			$responseArray["data"] = $error->getMessage();
 			$responseArray["sucess"] = false;
 		}	
+		return $responseArray;
 	}
 	
 	/**
@@ -169,12 +170,18 @@ class IssuerCompanyController extends Controller
 				$ext = $request->file('certified')->getClientOriginalExtension();			
 				$request->file('certified')->move(base_path()."/company_certifie/", $file_name . "." . $ext);
 				$certifie_file_path = base_path()."/company_certifie/".$file_name . "." . $ext;
+				
+				$pass = $request->input('pass');
+				
+				//Get Company
+				$company = Company::where("owner", Company::ownerIssuer)->first();
 
-				$pass = $request->input('pass');		
-				$company = Company::getIssuerCompany();	
-				$eNotas = new eNotasLib;
-				$responseData =  $eNotas->setCompanyCertifie($certifie_file_path, $pass, $company->gateway_company_id);	
+				//Create Gateway		
+				$gateway = NFEGatewayFactory::createGateway();
+
+				$responseData =  $gateway->setCompanyCertifie($company, $certifie_file_path, $pass);	
 				//Update On Database
+				
 				if($responseData['sucess']){
 					if($responseData['xml']){
 						$company->digital_certificate_name = $responseData['xml']->nome;	

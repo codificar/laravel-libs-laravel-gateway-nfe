@@ -274,24 +274,24 @@ class eNotasLib
 		return $responseData;
 	}	
 
-	public function setCompanyCertifie($certifie_file_path, $pass, $companyId) { 			
+	public function setCompanyCertifie(Company $company, $certifie_file_path, $password) { 			
 		$client = new \GuzzleHttp\Client();
 		$responseData = array('data' => [], 'sucess' => true); 
 		try {
 			
-			$response = $client->request('POST', 'https://api.enotasgw.com.br/v1/empresas/'.$companyId.'/certificadoDigital', [
+			$response = $client->request('POST', 'https://api.enotasgw.com.br/v1/empresas/'.$company->gateway_company_id.'/certificadoDigital', [
 				'headers' => [
 					'Authorization'     =>  "Basic ".NFESettings::getEnotasApiKey()
 				],
 				'multipart' => [
 					[
 						'name' => 'empresaId',
-						'contents' => $companyId,
+						'contents' => $company->gateway_company_id,
 						
 					],
 					[					
 						'name' => 'senha',
-						'contents' => $pass
+						'contents' => $password
 					],
 					[						
 						'name' => 'arquivo',
@@ -314,7 +314,13 @@ class eNotasLib
 	private function getTextBetweenTags($string, $tagname) {
 		$pattern = "/<$tagname ?.*>(.*)<\/$tagname>/";
 		preg_match($pattern, $string, $matches);
-		return $matches[1];
+		if(isset($matches[1])) {
+			return $matches[1];
+		}else{
+			return "Erro interno";
+		}
+		 
+		
 	}
 	
     public function generateNfe($requestId, $companyId, $client, $service, $value) {       
