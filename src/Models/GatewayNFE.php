@@ -1,7 +1,15 @@
 <?php
 
-use Illuminate\Database\Eloquent\Relations\Model;
+namespace Codificar\GatewayNfe\Models;
 
+use Illuminate\Database\Eloquent\Relations\Model;
+use Eloquent;
+use Log;
+//Internal Model
+use Codificar\GatewayNfe\Models\NFERequests;
+
+//Factory
+use Codificar\GatewayNfe\Lib\NFEGatewayFactory;
 
 class GatewayNFE extends Eloquent
 {
@@ -108,7 +116,7 @@ class GatewayNFE extends Eloquent
 	public function emmitProviderToUserNfe($providers, $users, $service, $startDate, $endDate){
 		foreach ($users as $key => $user) {    
 			foreach ($providers as $providerKey => $provider) {  	           
-				$value = Requests::getProviderValueByUser($provider['provider_id'], $user['id'], $startDate, $endDate);		
+				$value = NFERequests::getProviderValueByUser($provider['provider_id'], $user['id'], $startDate, $endDate);		
 				if(isset($provider['gateway_company_id'])){
 					$companyId = $provider['gateway_company_id'];
 					$companyId = "ecda2c6f-333a-4130-8eba-0c01452f0600";
@@ -123,7 +131,7 @@ class GatewayNFE extends Eloquent
 	public function emmitProviderToInstitutionNfe($providers, $institutions, $service, $startDate, $endDate){
 		foreach ($institutions as $key => $institution) {
 			foreach ($providers as $providerKey => $provider) {  
-				$value = Requests::getProviderValueByUser($provider['provider_id'], $institution['id'], $startDate, $endDate);
+				$value = NFERequests::getProviderValueByUser($provider['provider_id'], $institution['id'], $startDate, $endDate);
 				if(isset($provider['gateway_company_id'])){
 					$companyId = $provider['gateway_company_id'];
 					$companyId = "ecda2c6f-333a-4130-8eba-0c01452f0600";

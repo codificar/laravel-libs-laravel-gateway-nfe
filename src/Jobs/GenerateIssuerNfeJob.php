@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace Codificar\GatewayNfe\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -8,16 +8,18 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-use App\Models\Institution;
-
 use Log;
-use NFEGatewayFactory;
-use GatewayNFE;
-use Requests;
-use Settings;
-use User;
 use \Carbon\Carbon;
-use Company;
+
+//Factory
+use Codificar\GatewayNfe\Lib\NFEGatewayFactory;
+//Internal Model
+use Codificar\GatewayNfe\Models\GatewayNFE;
+use Codificar\GatewayNfe\Models\Company;
+use Codificar\GatewayNfe\Models\NFEUser;
+use Codificar\GatewayNfe\Models\NFEInstitution;
+use Codificar\GatewayNfe\Models\NFERequests;
+use Codificar\GatewayNfe\Models\NFESettings;
 
 class GenerateIssuerNfeJob implements ShouldQueue
 {
@@ -42,35 +44,37 @@ class GenerateIssuerNfeJob implements ShouldQueue
     {
         try {
             $service = array(
-                'descricao' => Settings::getNfeServiceDescription()
+                'descricao' => NFESettings::getNfeServiceDescription()
             );
             //Get Issuer Company
             $company = Company::getIssuerCompany();
-            $companyId  = $company->gateway_company_id;
-            //Get interval to search
-            $now = Carbon::now()->format("yy/m/d");
-            $latMonth = Carbon::now()->subMonth()->format("yy/m/d");
+            if($company){
+                $companyId  = $company->gateway_company_id;
+                //Get interval to search
+                $now = Carbon::now()->format("yy/m/d");
+                $latMonth = Carbon::now()->subMonth()->format("yy/m/d");
 
-            $now = "2019/04/01";
-            $latMonth = "2020/08/01";
-            //Get users and institutions            
-            $users = User::getUsersByRequestsInterval($now, $latMonth);
-            $institutions = Institution::getInstitutionByRequestsInterval($now, $latMonth);
+                $now = "2019/04/01";
+                $latMonth = "2020/08/01";
+                //Get users and institutions            
+                $users = NFEUser::getUsersByRequestsInterval($now, $latMonth);
+                $institutions = NFEInstitution::getInstitutionByRequestsInterval($now, $latMonth);
 
-            //Users Generate NFE
-            foreach ($users as $key => $user) {               
-                $value = (Requests::getSumIssuerValue($user['id'], $now, $latMonth) * -1);
-                $companyId = "ecda2c6f-333a-4130-8eba-0c01452f0600";
-                if($value > 0) $this->emmit($companyId, $user, $service, $value, GatewayNFE::issuerTypeProvider, GatewayNFE::clientTypeUser);
-                
-            }
-            //institutions Generate NFE
-            foreach ($institutions as $key => $institution) {
-                $value = (Requests::getSumIssuerValue($institution['id'], $now,  $latMonth) * -1);	
-                $companyId = "ecda2c6f-333a-4130-8eba-0c01452f0600";
-                if($value > 0) $this->emmit($companyId, $user, $service, $value, GatewayNFE::issuerTypeProvider, GatewayNFE::clientTypeUserInstitution);
-            }    
-                         
+                //Users Generate NFE
+                foreach ($users as $key => $user) {               
+                    $value = (NFERequests::getSumIssuerValue($user['id'], $now, $latMonth) * -1);
+                    $companyId = "ecda2c6f-333a-4130-8eba-0c01452f0600";
+                    if($value > 0) $this->emmit($companyId, $user, $service, $value, GatewayNFE::issuerTypeProvider, GatewayNFE::clientTypeUser);
+                    
+                }
+                //institutions Generate NFE
+                foreach ($institutions as $key => $institution) {
+                    $value = (NFERequests::getSumIssuerValue($institution['id'], $now,  $latMonth) * -1);	
+                    $companyId = "ecda2c6f-333a-4130-8eba-0c01452f0600";
+                    if($value > 0) $this->emmit($companyId, $user, $service, $value, GatewayNFE::issuerTypeProvider, GatewayNFE::clientTypeUserInstitution);
+                }    
+            }            
+            Log::error("Not Register issuer company");          
 		} catch (Exception $e) {            
 			Log::error("Get users and institutions ERROR");
 		}

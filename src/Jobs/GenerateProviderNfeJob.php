@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace Codificar\GatewayNfe\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -8,16 +8,20 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-use App\Models\Institution;
-
 use Log;
-use NFEGatewayFactory;
-use GatewayNFE;
-use Requests;
-use User;
 use \Carbon\Carbon;
-use Settings;
-use Provider;
+
+//Factory
+use Codificar\GatewayNfe\Lib\NFEGatewayFactory;
+//Internal Model
+use Codificar\GatewayNfe\Models\GatewayNFE;
+use Codificar\GatewayNfe\Models\Company;
+use Codificar\GatewayNfe\Models\NFEUser;
+use Codificar\GatewayNfe\Models\NFEInstitution;
+use Codificar\GatewayNfe\Models\NFERequests;
+use Codificar\GatewayNfe\Models\NFESettings;
+use Codificar\GatewayNfe\Models\NFEProvider;
+
 
 class GenerateProviderNfeJob implements ShouldQueue
 {
@@ -42,7 +46,7 @@ class GenerateProviderNfeJob implements ShouldQueue
     {
         try {
             $service = array(
-                'descricao' => Settings::getNfeServiceDescription()
+                'descricao' => NFESettings::getNfeServiceDescription()
             );
             //Get interval to search
             $now = Carbon::now()->format("yy/m/d");
@@ -51,9 +55,9 @@ class GenerateProviderNfeJob implements ShouldQueue
             $latMonth = "2020/08/01";
 
             //Get users and institutions
-            $providers = Provider::getProvidersByRequestsInterval($now, $latMonth);
-            $users = User::getUsersByRequestsInterval($now, $latMonth);
-            $institutions = Institution::getInstitutionByRequestsInterval($now, $latMonth);
+            $providers = NFEProvider::getProvidersByRequestsInterval($now, $latMonth);
+            $users = NFEUser::getUsersByRequestsInterval($now, $latMonth);
+            $institutions = NFEInstitution::getInstitutionByRequestsInterval($now, $latMonth);
 
             //Users Generate NFE
             GatewayNFE::emmitProviderToUserNfe($providers, $users, $service, $now, $latMonth);

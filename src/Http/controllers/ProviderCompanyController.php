@@ -12,10 +12,13 @@ use Codificar\GatewayNfe\Http\Requests\ProviderCompanyAddressFormRequest;
 use View;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Queue;
 //Externals Models
 use Auth;
 //Internal Model
 use Codificar\GatewayNfe\Models\Company;
+use Codificar\GatewayNfe\Models\GatewayNFE;
+use Codificar\GatewayNfe\Jobs\GenerateProviderNfeJob;
 
 class ProviderCompanyController extends Controller
 {	
@@ -26,12 +29,12 @@ class ProviderCompanyController extends Controller
 	*/
 	 	
 	public function create($id = null){
-		// if(Auth::guard('web')->user()->type = 'admin'){
-		// 	$enviroment = 'admin';
-		// }else{
-		// 	$enviroment = 'provider';
-		// 	$id = Auth::guard('web')->user()->id;
-		// }
+		if(Auth::guard('web')->user()->type = 'admin'){
+			$enviroment = 'admin';
+		}else{
+			$enviroment = 'provider';
+			$id = Auth::guard('web')->user()->id;
+		}
 		$enviroment = 'admin';
 		//Has provider Company	
 		$providerCompany = Company::getProviderCompany($id);		
@@ -216,7 +219,7 @@ class ProviderCompanyController extends Controller
 	 * @param $provider_id
 	 * @return \Illuminate\Http\JsonResponse
 	*/
-	public function getProviderCompanyOnGateway($id = null){		
+	public function getProviderCompanyOnGateway($id = null){
 		$response = array(
 			'response' => null,
 			'sucess' => true,			
