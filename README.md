@@ -1,107 +1,139 @@
-# laravel-generic-lib
-laravel-generic-lib é uma bilioteca genérica para o laravel. É um exemplo de uma Lib que possui rotas próprias, controllers, models, migrations, FormRequests, resources, arquivos de tradução, views (integração do blade do laravel com vue.js)
+# laravel-gateway-nfe
+A gateway nfe library for laravel.
+Uma bibliotéca para implementar gateways de NFE
 
-# Observações
-- É importante sempre especificar qual middleware a biblioteca que você for desenvolver utiliza. Tais middleware deverão ser pré requisitos para os projetos que for instalar a sua lib. Exemplo: middleware para verificar se o admin fez login `'middleware' => 'auth.admin_api'`
-- Utilizar preferencialmente os models criados na bibliotecas. Se utilizar models de um projeto especifíco, outro projeto pode não conter os mesmos models.
-- Arquivos de traduções também devem ser feitos na biblioteca (evitar utilizar traduções de um projeto)
-- Utilizar os seguintes prefixos nas rotas:
--- Rotas de api para apps: `localhost:8000/libs/nomedarota`
--- Rotas do painel : `localhost:8000/admin/libs/nomedarota`, e `localhost:8000/corp/libs/nomedarota` ...
-- Preferencialmente, ao criar migrations, verificar se uma coluna, tabela ou row, já existe. Somente se não existir deverá ser criado.
-- Deverá ser instalado o vue.js dentro da biblioteca
--  Gerar os arquivos minificados do vue dentro da própria biblioteca do laravel, e utilizar o `publishes` do laravel para colocar esses arquivos dentro da pasta public do projeto que for instalar essa lib. Depois é só adicionar o script no composer.json para quando rodar o comando `composer dump-autoload -o`, ele roda o publishes e copia esses arquivos minificados do vue da bilioteca e jogo dentro do projeto. É importante ficar atento ao tamanho do arquivo, evite utilizar modulos desnecessários no `package.json` e no fim, quando for da commit nas suas mudanças, rode `npm run prod` para gerar os arquivos minificados.
-- Repare no arquivo GenericServiceProvider.php: 
+## Prerequisites
+- 1º: Add the "enotas/php-client" library before install this library.
 ```
-$this->publishes([
-    __DIR__.'/../public/js' => public_path('vendor/codificar/generic'),
-], 'public_vuejs_libs'); 
+"enotas/php-client": "^1.0",
 ```
-- Aqui está sendo copiado os arquivos da pasta public/js da biblioteca e jogado para a pasta public/vendor/codificar/generic do projeto
-- Abaixo, na parte de instalação, será mostrado como colocar o script no composer.json do projeto para fazer as mudanças sempre que rodar composer dump-autoload -o
+- 2º: These middwares are needed:
+- If your project does not have some of these middleware, it is necessary to add them.
+```
+auth.admin
+auth.provider
+auth.provider_api:api
+```
+- 3º: The following tables are required. The columns are the same as in the MOTOBOYS project:
+```
+Provider
+Settings
+Institution
+Requests
+User
+```
 
-# Rotas
-| Tipo  | Retorno | Rota  | Description |
-| :------------ |:---------------: |:---------------:| :-----|
-| `get` | View/html | /admin/libs/example_vuejs | Api retorna um exemplo de uma página feita em vue.js |
-| `get` | Api/json | /libs/generic/example | Api que os Apps poderão consumir | 
-| `get` | Api/json | /libs/generic/lang.trans/{file} | Api retornará os arquivos de tradução do Laravel para serem usados dentro do vue.js |
-
-
-# Estrutura
- ![alt text](https://i.imgur.com/PsahJHb.jpg)
-
-
-# Instalação
-
-- Adiciona o projeto no composer.json (direto do gitlab)
+## Getting Started
+- In root of your Laravel app in the composer.json add this code to clone the project:
 
 ```
 
 "repositories": [
-    {
-        "type":"package",
-        "package": {
-            "name": "codificar/contactform",
-            "version":"master",
-            "source": {
-                "url": "https://libs:ofImhksJ@git.codificar.com.br/laravel-libs/laravel-generic-lib.git",
-                "type": "git",
-                "reference":"master"
-            }
-        }
-    }
-],
+		{
+			"type":"package",
+			"package": {
+			  "name": "codificar/gatewaynfe",
+			  "version":"master",
+			  "source": {
+				  "url": "https://libs:ofImhksJ@git.codificar.com.br/laravel-libs/laravel-gateway-nfe.git",
+				  "type": "git",
+				  "reference":"master"
+				}
+			}
+		}
+	],
 
 // ...
 
 "require": {
     // ADD this
-    "codificar/generic": "dev-master",
+    "codificar/withdrawals": "dev-master",
 },
 
 ```
-
-- Procure o psr-4 do autoload e adione a pasta src da sua biblioteca
+- If you want add a specific version (commit, tag or branch), so add like this:
 ```
-"psr-4": {
-    // Adicionar aqui
-    "Codificar\\Generic\\": "vendor/codificar/generic/src",
-}
+"codificar/gatewaynfe": "dev-master",
+```
+- Now add 
 ```
 
-- Agora, precisamos adicionar o novo Service Provider no arquivo `config/app.php` dentro do array `providers`:
-
+"autoload": {
+        //...
+        "psr-4": {
+            // Add your Lib here
+           "Codificar\\GatewayNfe\\": "vendor/codificar/gatewaynfe/src",
+            //...
+        }
+    },
+    //...
 ```
-'providers' => [
-         ...,
-            // The new package class
-            Codificar\Generic\GenericServiceProvider::class,
-        ],
-```
-- Precisamos copiar os arquivos da pasta public da biblioteca para a pasta public do projeto. Para isso adicione dentro do composer.json, no objeto `"scripts": {`. Repare que especificamos a tag. Nesse caso é public_vuejs_libs. Essa tag é a mesma que fica no arquivo GenericServiceProvider.php da biblioteca. Não tem problema várias bibliotecas utilizarem a mesma tag. Inclusive é bom que todos os componentes utilizem a mesma tag, para não ter que ficar adicionando isso a cada novo projeto que precisar da sua lib.
-```
-"post-autoload-dump": [
-	"@php artisan vendor:publish --tag=public_vuejs_libs --force"
-]
-```
-
-- Dump o composer autoloader
+- Dump the composer autoloader
 
 ```
 composer dump-autoload -o
 ```
 
-- Rode as migrations
+Check if has the laravel publishes in composer.json with public_vuejs_libs tag:
+```
+    "scripts": {
+        //...
+		"post-autoload-dump": [
+			"@php artisan vendor:publish --tag=public_vuejs_libs --force"
+		]
+	},
+```
+
+- Next, we need to add our new Service Provider in our `config/app.php` inside the `providers` array:
+
+```
+'providers' => [
+         ...,
+            // The new package class
+            Codificar\GatewayNfe\GatewayNfeServiceProvider::class,
+        ],
+```
+- Migrate the database tables
 
 ```
 php artisan migrate
 ```
 
-Por fim, teste se tudo está ok e acesse as rotas de exemplo:
+And finally, start the application by running:
 
 ```
 php artisan serve
 ```
-View: http://localhost:8000/admin/libs/example_vuejs
-Api: http://localhost:8000/libs/generic/example
+
+## Admin Issuer (web)
+| Type  | Return | Route  | Description |
+| :------------ |:---------------: |:---------------:| :-----|
+| `get` | View/html | /admin/issuer/company/create | View to create issuer company |
+| `post` | Api/json |/admin/issuer/company/store | Api to save issuer company | 
+| `post` | Api/json | /admin/issuer/company/update | Api to update issuer company | 
+| `post` | Api/json | /admin/issuer/company/certified | Api Auth issuer company with docs | 
+| `post` | Api/json | /admin/issuer/company/login | Api Auth issuer company with login| 
+
+## Admin Provider (web)
+| Type  | Return | Route  | Description |
+| :------------ |:---------------: |:---------------:| :-----|
+| `get` | View/html | /admin/provider/company/create/{provider_id} | View to create provider company |
+| `post` | Api/json |/admin/provider/company/store | Api to save provider company | 
+| `post` | Api/json | /admin/provider/company/update | Api to update provider company | 
+| `post` | Api/json | /admin/provider/company/certified | Api Auth provider company with docs | 
+| `post` | Api/json | /admin/provider/company/login | Api Auth provider company with login| 
+
+## Provider Routes (App)
+| Type  | Return | Route  | Description |
+| :------------ |:---------------: |:---------------:| :-----|
+| `get` | Api/json | /libs/gatewaynfe/provider/company/{provider_id} | Get provider company |
+| `post` | Api/json | /libs/gatewaynfe/provider/store/address | Save provider company address |
+| `post` | Api/json | /libs/gatewaynfe/provider/company/store/info | Save provider company info |
+| `post` | Api/json | /libs/gatewaynfe/provider/company/update | Update provider company |
+| `post` | Api/json | /libs/gatewaynfe/provider/company/auth/certified | Auth provider company with docs |
+| `post` | Api/json | /libs/gatewaynfe/provider/company/auth/login | Auth provider company with login|
+
+## Translation files route
+| Type  | Return | Route  | Description |
+| :------------ |:---------------: |:---------------:| :-----|
+| `get` | Api/json | /libs/lang.trans/{file} | Api to get the translation files of laravel and use inside the vue.js |

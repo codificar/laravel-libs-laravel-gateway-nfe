@@ -34,7 +34,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Co
 });
 
 //Provider API
-Route::group(['prefix' => '/api/v1/provider/company', 'middleware' => 'auth.provider_api:api', 'namespace' => 'Codificar\GatewayNfe\Http\Controllers'], function () {
+Route::group(['prefix' => '/libs/gatewaynfe/provider/company', 'middleware' => 'auth.provider_api:api', 'namespace' => 'Codificar\GatewayNfe\Http\Controllers'], function () {
     Route::get('/{id}', array('as' => 'providerApiGetProviderCompany', 'uses' => 'ProviderCompanyController@getProviderCompany'));   
     Route::post('/store/address', array('as' => 'providerApiCompanyStore', 'uses' => 'ProviderCompanyController@storeAddress'));
     Route::post('/store/info', array('as' => 'providerApiCompanyStore', 'uses' => 'ProviderCompanyController@storeInfo'));
