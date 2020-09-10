@@ -54,8 +54,8 @@ class GenerateIssuerNfeJob implements ShouldQueue
                 $now = Carbon::now()->format("yy/m/d");
                 $latMonth = Carbon::now()->subMonth()->format("yy/m/d");
 
-                $now = "2019/04/01";
-                $latMonth = "2020/08/01";
+                // $now = "2019/04/01";
+                // $latMonth = "2020/08/01";
                 //Get users and institutions            
                 $users = NFEUser::getUsersByRequestsInterval($now, $latMonth);
                 $institutions = NFEInstitution::getInstitutionByRequestsInterval($now, $latMonth);
