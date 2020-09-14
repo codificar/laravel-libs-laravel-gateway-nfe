@@ -19,7 +19,7 @@ class AddNfeGatewayMenu extends Migration
                 'parent_id' => 2319,
                 'order' => 915,
                 'is_menu' => 1,
-                'url' => '/admin/settings/nfe_gateway',
+                'url' => '/admin/libs/settings/nfe_gateway',
                 'icon' => 'mdi mdi-receipt'
             ]
         );

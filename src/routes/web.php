@@ -2,6 +2,13 @@
 //Admin
 Route::group(['middleware' => 'auth.admin'], function(){	
 Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Controllers'], function(){	
+
+   
+    Route::group(['prefix' => '/libs/settings'], function(){ 
+        Route::get('/nfe_gateway', array('as' => 'NfeGatewaySettings', 'uses' => 'GatewaySettingsController@create'));
+        Route::post('/nfe_gateway', array('as' => 'saveNfeSettings', 'uses' => 'GatewaySettingsController@store'));
+    });
+    //Issuer
     Route::group(['prefix' => '/issuer/company'], function(){
          //Company      
          Route::get('/create', array('as' => 'issuerCreateProviderCompany', 'uses' => 'IssuerCompanyController@create'));
@@ -12,7 +19,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Co
          Route::post('/certified', array('as' => 'issuerSetCompanyCertifie', 'uses' => 'IssuerCompanyController@setCompanyCertifie'));           
          Route::post('/login', array('as' => 'issuerLoginAuth', 'uses' => 'IssuerCompanyController@authLogin'));    
     });
-    	
+    //Provider
     Route::group(['prefix' => '/provider/company'], function(){
         //Company
         Route::get('gateway/{id}', array('as' => 'adminGetProviderCompany', 'uses' => 'ProviderCompanyController@getProviderCompanyOnGateway'));
