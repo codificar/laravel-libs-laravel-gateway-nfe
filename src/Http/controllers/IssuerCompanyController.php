@@ -18,6 +18,10 @@ use Auth;
 
 //Internal Model
 use Codificar\GatewayNfe\Models\Company;
+use Codificar\GatewayNfe\Models\NFERequests;
+use Codificar\GatewayNfe\Models\NFEProvider;
+use Codificar\GatewayNfe\Models\NFEUser;
+use Codificar\GatewayNfe\Models\NFEInstitution;
 
 //Internal Model
 use Codificar\GatewayNfe\Models\NFESettings;
@@ -201,5 +205,12 @@ class IssuerCompanyController extends Controller
 		}	
 		
 		return $responseData;
+	}
+	
+
+	public function simulateJob(Request $request){	
+		
+		
+		return $responseArray;
 	}
 }

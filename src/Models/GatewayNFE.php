@@ -116,13 +116,16 @@ class GatewayNFE extends Eloquent
 	public function emmitProviderToUserNfe($providers, $users, $service, $startDate, $endDate){
 		foreach ($users as $key => $user) {    
 			foreach ($providers as $providerKey => $provider) {  	           
-				$value = NFERequests::getProviderValueByUser($provider['provider_id'], $user['id'], $startDate, $endDate);		
+				$value = NFERequests::getProviderValueByUser($provider['provider_id'], $user['id'], $startDate, $endDate);	
+				Log::debug("Provider ".$provider['provider_id']."To Institution".$user['id']." VALUE ".$value);
 				if(isset($provider['gateway_company_id'])){
-					$companyId = $provider['gateway_company_id'];
-					$companyId = "ecda2c6f-333a-4130-8eba-0c01452f0600";
-					$value = 10;
+					$companyId = $provider['gateway_company_id'];							
+					// $companyId = "ecda2c6f-333a-4130-8eba-0c01452f0600";
+					// $value = 10;
 					if($value > 0) self::emmitOnGateway($companyId, $user, $service, $value, GatewayNFE::issuerTypeProvider, GatewayNFE::clientTypeUser);
-				} 
+				} else {
+					Log::debug("Provider to User ".$provider['provider_id']." no have valid company");
+				}
 			   
 			}                
 		}
@@ -132,11 +135,14 @@ class GatewayNFE extends Eloquent
 		foreach ($institutions as $key => $institution) {
 			foreach ($providers as $providerKey => $provider) {  
 				$value = NFERequests::getProviderValueByUser($provider['provider_id'], $institution['id'], $startDate, $endDate);
+				Log::debug("Provider ".$provider['provider_id']."To Institution".$institution['id']." VALUE ".$value);	
 				if(isset($provider['gateway_company_id'])){
-					$companyId = $provider['gateway_company_id'];
-					$companyId = "ecda2c6f-333a-4130-8eba-0c01452f0600";
-					$value = 20;
+					$companyId = $provider['gateway_company_id'];	
+					// $companyId = "ecda2c6f-333a-4130-8eba-0c01452f0600";
+					// $value = 20;
 					if($value > 0) self::emmitOnGateway($companyId, $institution, $service, $value, GatewayNFE::issuerTypeProvider, GatewayNFE::clientTypeUserInstitution);
+				}else {
+					Log::debug("Provider To Institution ".$provider['provider_id']." no have valid company");
 				}                  
 			}
 		}     

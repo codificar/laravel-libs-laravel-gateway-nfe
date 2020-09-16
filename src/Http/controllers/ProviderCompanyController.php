@@ -16,9 +16,15 @@ use Queue;
 //Externals Models
 use Auth;
 //Internal Model
+use Codificar\GatewayNfe\Models\NFERequests;
+use Codificar\GatewayNfe\Models\NFEProvider;
+use Codificar\GatewayNfe\Models\NFEUser;
+use Codificar\GatewayNfe\Models\NFEInstitution;
+
 use Codificar\GatewayNfe\Models\Company;
 use Codificar\GatewayNfe\Models\GatewayNFE;
 use Codificar\GatewayNfe\Jobs\GenerateProviderNfeJob;
+use Codificar\GatewayNfe\Jobs\SimulateGenerateProviderNfeJob;
 
 class ProviderCompanyController extends Controller
 {	
@@ -317,6 +323,41 @@ class ProviderCompanyController extends Controller
 		$gatewayResponse = $gateway->getNfeByRequestId("ecda2c6f-333a-4130-8eba-0c01452f0600", 142);	
 		
 		return response()->json($gatewayResponse);
+	}
+
+	public function simulateValue(Request $request){
+		$now = $request->start_date;
+		$latMonth = $request->end_date;
+
+		//Get users and institutions
+		$providers = NFEProvider::getProvidersByRequestsInterval($now, $latMonth);
+		$users = NFEUser::getUsersByRequestsInterval($now, $latMonth);
+		$institutions = NFEInstitution::getInstitutionByRequestsInterval($now, $latMonth);
+		$providers = NFEProvider::getProvidersByRequestsInterval($now, $latMonth);
+		$responseArray = [];
+		foreach ($users as $key => $user) {    
+			foreach ($providers as $providerKey => $provider) {  	           
+				$value = NFERequests::getProviderValueByUser($provider['provider_id'], $user['id'], $now, $latMonth);	
+				$providerCompany = Company::getProviderCompany($provider['provider_id']);
+				$responseObject = (object) [
+					'type' => "user",					
+					'user_id' => $user['id'],
+					'provider_id' => $provider['provider_id'],
+					'value' => $value,
+					'gateway_company_id' => $providerCompany ? $providerCompany->gateway_company_id : false
+				];
+				if($value > 0) array_push($responseArray, $responseObject);				   
+			}                
+		}
+		
+		return $responseArray;
+	}
+
+	public function simulateJob(Request $request){
+		$startDate = $request->start_date;
+		$endDate = $request->end_date;
+		
+		Queue::push(new SimulateGenerateProviderNfeJob($startDate, $endDate));
 	}
 
 }

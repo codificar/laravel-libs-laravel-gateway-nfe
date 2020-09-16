@@ -27,7 +27,7 @@ class NFERequests extends Requests {
         foreach ($requests as $request) {
             //busca fatura consolidad
             $invoice = (array) json_decode($request->invoice);            
-            //atribui e soma valores
+            //atribui e soma valores           
             if(count($invoice)){  
                 $sumCompanyValue = $sumCompanyValue + $invoice['company_value'];                 
             }
@@ -48,7 +48,7 @@ class NFERequests extends Requests {
             ->where('request.is_cancelled', 0) 
             ->where('request.user_id', $user_id)
             ->join('provider', 'request.confirmed_provider', '=', 'provider.id')
-            ->join('companies', 'provider.id', '=', 'companies.provider_id')
+            ->leftJoin('companies', 'provider.id', '=', 'companies.provider_id')
             ->select(
                 'request.invoice'
             )

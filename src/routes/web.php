@@ -3,6 +3,16 @@
 Route::group(['middleware' => 'auth.admin'], function(){	
 Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Controllers'], function(){	
 
+    Route::group(['prefix' => '/simulate/nfe'], function(){ 
+        Route::get('/', array('as' => 'NfeGatewaySettings', 'uses' => 'GatewayNFEController@simulate'));
+
+        Route::post('/provider/value', array('as' => 'nfeProviderValue', 'uses' => 'ProviderCompanyController@simulateValue'));
+        Route::post('/provider/emmit_job', array('as' => 'nfeProviderJob', 'uses' => 'ProviderCompanyController@simulateJob'));
+
+        Route::post('/issuer/value', array('as' => 'nfeIssuerValue', 'uses' => 'IssuerCompanyController@simulateValue'));      
+        Route::post('/issuer/emmit_job', array('as' => 'nfeIssuerJob', 'uses' => 'IssuerCompanyController@simulateJob'));
+       
+    });
    
     Route::group(['prefix' => '/libs/settings'], function(){ 
         Route::get('/nfe_gateway', array('as' => 'NfeGatewaySettings', 'uses' => 'GatewaySettingsController@create'));

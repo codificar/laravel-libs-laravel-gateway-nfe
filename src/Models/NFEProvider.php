@@ -24,7 +24,8 @@ class NFEProvider extends Provider
 
     public static function getProvidersByRequestsInterval($dateStart, $dateEnd) {
         $providers = self::join('request', 'provider.id', '=', 'request.confirmed_provider')
-            ->join('companies', 'provider.id', '=', 'companies.provider_id')
+            ->leftJoin('companies', 'provider.id', '=', 'companies.provider_id')
+            // ->join('companies', 'provider.id', '=', 'companies.provider_id')
             ->whereBetween('request.created_at', array($dateStart, $dateEnd))
             ->where('request.status', 1)
             ->where('request.is_cancelled', 0) 

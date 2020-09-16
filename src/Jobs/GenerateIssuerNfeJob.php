@@ -62,14 +62,16 @@ class GenerateIssuerNfeJob implements ShouldQueue
 
                 //Users Generate NFE
                 foreach ($users as $key => $user) {               
-                    $value = (NFERequests::getSumIssuerValue($user['id'], $now, $latMonth) * -1);
+                    // $value = (NFERequests::getSumIssuerValue($user['id'], $now, $latMonth) * -1);
+                    $value = (NFERequests::getSumIssuerValue($user['id'], $now, $latMonth));
                     $companyId = "ecda2c6f-333a-4130-8eba-0c01452f0600";
                     if($value > 0) $this->emmit($companyId, $user, $service, $value, GatewayNFE::issuerTypeProvider, GatewayNFE::clientTypeUser);
                     
                 }
                 //institutions Generate NFE
                 foreach ($institutions as $key => $institution) {
-                    $value = (NFERequests::getSumIssuerValue($institution['id'], $now,  $latMonth) * -1);	
+                    // $value = (NFERequests::getSumIssuerValue($institution['id'], $now,  $latMonth) * -1);	
+                    $value = (NFERequests::getSumIssuerValue($institution['id'], $now,  $latMonth));	
                     $companyId = "ecda2c6f-333a-4130-8eba-0c01452f0600";
                     if($value > 0) $this->emmit($companyId, $user, $service, $value, GatewayNFE::issuerTypeProvider, GatewayNFE::clientTypeUserInstitution);
                 }    

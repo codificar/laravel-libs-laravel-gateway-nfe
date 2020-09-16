@@ -23,18 +23,22 @@ use Codificar\GatewayNfe\Models\NFESettings;
 use Codificar\GatewayNfe\Models\NFEProvider;
 
 
-class GenerateProviderNfeJob implements ShouldQueue
+class SimulateGenerateProviderNfeJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    protected $startDate;
+	protected $endDate;
     
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($startDate, $endDate)
 	{        
-		
+        $this->startDate = $startDate;
+		$this->endDate = $endDate;
 	}
 
     /**
@@ -49,16 +53,14 @@ class GenerateProviderNfeJob implements ShouldQueue
                 'descricao' => NFESettings::getNfeServiceDescription()
             );
             //Get interval to search
-            $now = Carbon::now()->format("yy/m/d");
-            $latMonth = Carbon::now()->subMonth()->format("yy/m/d");
-            // $now = "2019/04/01";
-            // $latMonth = "2020/08/01";
+            $now = $this->startDate;
+            $latMonth = $this->endDate;
 
             //Get users and institutions
             $providers = NFEProvider::getProvidersByRequestsInterval($now, $latMonth);
             $users = NFEUser::getUsersByRequestsInterval($now, $latMonth);
             $institutions = NFEInstitution::getInstitutionByRequestsInterval($now, $latMonth);
-
+            
             //Users Generate NFE
             GatewayNFE::emmitProviderToUserNfe($providers, $users, $service, $now, $latMonth);
             

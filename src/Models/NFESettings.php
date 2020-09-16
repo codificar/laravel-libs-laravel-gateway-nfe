@@ -42,6 +42,21 @@ class NFESettings extends Settings
 	}
 
 	/**
+	 * Get Copy email
+	 *
+	 * @return string
+	 */
+	public static function getNfeCopyEmail()
+	{
+		$settings = Settings::where('key', 'nfe_gateway_copy_email')->first();
+
+		if ($settings)
+			return str_replace(" ", "", $settings->value);
+		else
+			return "teste@codificar.com.br";
+	}
+
+	/**
 	 * Get Emmit Provider NFE Day
 	 *
 	 * @return string

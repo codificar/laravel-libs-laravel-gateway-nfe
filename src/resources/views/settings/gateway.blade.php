@@ -59,7 +59,17 @@
 								<div class="help-block with-errors"></div>
 							</div>
 						</div>	
-						<div class="col-lg-6">
+						<div class="col-lg-3">
+							<div class="form-group">
+								<label for="usr">
+									Email para cópia das notas
+									<a href="#" class="question-field" data-toggle="tooltip" title="Email para cópia das notas"><span class="mdi mdi-comment-question-outline"></span></a> <span class="required-field">*</span>
+								</label>
+								<input type="email" class="form-control" name="nfe_gateway_copy_email" required data-error="{{trans('setting.field')}}" value="{{$model->nfe_gateway_copy_email->value}}">
+								<div class="help-block with-errors"></div>
+							</div>
+						</div>	
+						<div class="col-lg-3">
 							<div class="form-group">
 								<label for="gateway">Ambiente do eNotas</label>
 									<select class="select form-control" name="nfe_gateway_env">

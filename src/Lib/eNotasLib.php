@@ -335,7 +335,7 @@ class eNotasLib
 				'valorTotal' => $value,
 				"enviarPorEmail" => true,
 				"dadosAdicionaisEmail" => array(
-					"outrosDestinatarios" => "gustavo.silva@codificar.com.br"
+					"outrosDestinatarios" => NFESettings::getNfeCopyEmail()
 				),
             ));		
             $responseData['data'] = $nfeId;

@@ -1,5 +1,7 @@
 <?php
-namespace api\v1;
+
+namespace Codificar\GatewayNfe\Http\Controllers;
+
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
@@ -8,6 +10,9 @@ use App\Http\Requests\GatewayNFEFormRequest;
 //Moedls
 use GatewayNFE;
 use Log;
+
+//Laravel Uses
+use View;
 class GatewayNFEController extends Controller {   
   
      /**
@@ -73,5 +78,9 @@ class GatewayNFEController extends Controller {
         }	
 		return response()->json($responseData);	
 		
+	}
+
+	public function simulate(){	
+		return View::make('gateway_nfe::simulate_nfe.index');
 	}
 }

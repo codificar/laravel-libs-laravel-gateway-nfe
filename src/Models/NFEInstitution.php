@@ -58,6 +58,7 @@ class NFEInstitution extends Institution {
             ->groupBy('user.id')
 			->get();
 			
+		$formatedUsers = [];	
 		foreach ($users as $key => $value) {
 			$gender = $value->gender == 'male' ? 'M' : 'F';
 			$formatedUsers[$key] = array(

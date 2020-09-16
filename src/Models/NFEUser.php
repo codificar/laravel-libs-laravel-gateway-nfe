@@ -48,7 +48,7 @@ class NFEUser extends User
             ->get();
 
 
-         
+		$formatedUsers = [];
         foreach ($users as $key => $value) {
             $formatedUsers[$key] = array(
                 'id' => $value->id,

@@ -84,6 +84,18 @@ class insertSettings extends Migration
                 'sub_category' => '0'
             ]
         );
+
+        Settings::updateOrCreate(
+            ['category' => 10, 'key' => 'nfe_gateway_copy_email'],
+            [
+                'key' => 'nfe_gateway_copy_email',
+                'value' => "",
+                'tool_tip' => "Nfe Gateway Copy email",
+                'page' => 1,
+                'category' => '10',
+                'sub_category' => '0'
+            ]
+        );
     }
     /**
      * Reverse the migrations.
