@@ -41486,7 +41486,11 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
     return {
       providerValue: [],
       providerValueStart: "",
-      providerValueEnd: ""
+      providerValueEnd: "",
+
+      issuerValue: [],
+      issuerValueStart: "",
+      issuerValueEnd: ""
     };
   },
 
@@ -41575,27 +41579,110 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
       }
 
       return providerEmmitNfe;
+    }(),
+    getIssuerValue: function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
+        var response;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.prev = 0;
+                _context3.next = 3;
+                return __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(this.routeSimulateIssuerValue, {
+                  start_date: this.issuerValueStart.replace(/-/g, "/"),
+                  end_date: this.issuerValueEnd.replace(/-/g, "/")
+                });
+
+              case 3:
+                response = _context3.sent;
+
+
+                this.issuerValue = response.data;
+                _context3.next = 10;
+                break;
+
+              case 7:
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](0);
+
+                console.log("getIssuerValue error", _context3.t0);
+
+              case 10:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this, [[0, 7]]);
+      }));
+
+      function getIssuerValue() {
+        return _ref3.apply(this, arguments);
+      }
+
+      return getIssuerValue;
+    }(),
+    issuerEmmitNfe: function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee4() {
+        var response;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.prev = 0;
+                _context4.next = 3;
+                return __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(this.routeSimulateIssuerJob, {
+                  start_date: this.issuerValueStart.replace(/-/g, "/"),
+                  end_date: this.issuerValueEnd.replace(/-/g, "/")
+                });
+
+              case 3:
+                response = _context4.sent;
+
+                alert("Notas Emitidas");
+                _context4.next = 10;
+                break;
+
+              case 7:
+                _context4.prev = 7;
+                _context4.t0 = _context4["catch"](0);
+
+                console.log("issuerEmmitNfe error", _context4.t0);
+
+              case 10:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this, [[0, 7]]);
+      }));
+
+      function issuerEmmitNfe() {
+        return _ref4.apply(this, arguments);
+      }
+
+      return issuerEmmitNfe;
     }()
   },
 
   mounted: function () {
-    var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
-      return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+    var _ref5 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee5() {
+      return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context5.prev = _context5.next) {
             case 0:
               console.log("MOUNTED SIMULATE");
 
             case 1:
             case "end":
-              return _context3.stop();
+              return _context5.stop();
           }
         }
-      }, _callee3, this);
+      }, _callee5, this);
     }));
 
     function mounted() {
-      return _ref3.apply(this, arguments);
+      return _ref5.apply(this, arguments);
     }
 
     return mounted;
@@ -41783,7 +41870,173 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(1)
+        _c("div", { staticClass: "card-block" }, [
+          _c("h4", { staticClass: "m-b-0" }, [_vm._v("Valores do Emitente")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-2 form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v("Data Inicial")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.issuerValueStart,
+                    expression: "issuerValueStart"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "date" },
+                domProps: { value: _vm.issuerValueStart },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.issuerValueStart = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-2 form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v("Data Final")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.issuerValueEnd,
+                    expression: "issuerValueEnd"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "date" },
+                domProps: { value: _vm.issuerValueEnd },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.issuerValueEnd = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-1" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.getIssuerValue()
+                    }
+                  }
+                },
+                [_vm._v("\n              Pesquisar\n            ")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md" }, [
+              _c("p", [_vm._v(_vm._s(JSON.stringify(this.issuerValue)))])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("h4", { staticClass: "m-b-0" }, [
+            _vm._v("Emitir notas do emitente")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-2 form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v("Data Inicial")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.issuerValueStart,
+                    expression: "issuerValueStart"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "date" },
+                domProps: { value: _vm.issuerValueStart },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.issuerValueStart = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-2 form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v("Data Final")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.issuerValueEnd,
+                    expression: "issuerValueEnd"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "date" },
+                domProps: { value: _vm.issuerValueEnd },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.issuerValueEnd = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-3" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.issuerEmmitNfe()
+                    }
+                  }
+                },
+                [_vm._v("\n              Emitir\n            ")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md" })
+          ])
+        ])
       ])
     ])
   ])
@@ -41795,30 +42048,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("h4", { staticClass: "m-b-0 text-white" }, [_vm._v("Simulador")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-block" }, [
-      _c("h4", { staticClass: "m-b-0" }, [_vm._v("Emitente")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-2 form-group" }, [
-          _c("label", { staticClass: "control-label" }, [
-            _vm._v("Data Inicial")
-          ]),
-          _vm._v(" "),
-          _c("input", { staticClass: "form-control", attrs: { type: "date" } })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-2 form-group" }, [
-          _c("label", { staticClass: "control-label" }, [_vm._v("Data Final")]),
-          _vm._v(" "),
-          _c("input", { staticClass: "form-control", attrs: { type: "date" } })
-        ])
-      ])
     ])
   }
 ]

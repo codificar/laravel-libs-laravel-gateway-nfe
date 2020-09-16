@@ -13,6 +13,10 @@ export default {
       providerValue: [],
       providerValueStart: "",
       providerValueEnd: "",
+
+      issuerValue: [],
+      issuerValueStart: "",
+      issuerValueEnd: "",
     };
   },
 
@@ -40,6 +44,31 @@ export default {
         alert("Notas Emitidas")
       } catch (error) {
         console.log("providerEmmitNfe error", error);
+      }
+    },
+
+    async getIssuerValue() {
+      try {
+        const response = await axios.post(this.routeSimulateIssuerValue, {
+          start_date: this.issuerValueStart.replace(/-/g, "/"),
+          end_date: this.issuerValueEnd.replace(/-/g, "/"),
+        });
+      
+        this.issuerValue = response.data;
+      } catch (error) {
+        console.log("getIssuerValue error", error);
+      }
+    },
+
+    async issuerEmmitNfe() {
+      try {
+        const response = await axios.post(this.routeSimulateIssuerJob, {
+          start_date: this.issuerValueStart.replace(/-/g, "/"),
+          end_date: this.issuerValueEnd.replace(/-/g, "/"),
+        });
+        alert("Notas Emitidas")
+      } catch (error) {
+        console.log("issuerEmmitNfe error", error);
       }
     },
   },
@@ -131,17 +160,76 @@ export default {
           </div>
         </div>
 
-        <div class="card-block">
-          <h4 class="m-b-0">Emitente</h4>
+          <div class="card-block">
+          <h4 class="m-b-0">Valores do Emitente</h4>
           <div class="row">
             <div class="col-md-2 form-group">
               <label class="control-label">Data Inicial</label>
-              <input type="date" class="form-control" />
+              <input
+                v-model="issuerValueStart"
+                type="date"
+                class="form-control"
+              />
             </div>
 
             <div class="col-md-2 form-group">
               <label class="control-label">Data Final</label>
-              <input type="date" class="form-control" />
+              <input
+                v-model="issuerValueEnd"
+                type="date"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-1">
+              <button
+                v-on:click="getIssuerValue()"
+                type="button"
+                class="btn btn-success"
+              >
+                Pesquisar
+              </button>
+            </div>
+            <div class="col-md">
+              <p>{{ JSON.stringify(this.issuerValue) }}</p>
+            </div>
+          </div>
+        </div>
+
+         <div class="card-block">
+          <h4 class="m-b-0">Emitir notas do emitente</h4>
+          <div class="row">
+            <div class="col-md-2 form-group">
+              <label class="control-label">Data Inicial</label>
+              <input
+                v-model="issuerValueStart"
+                type="date"
+                class="form-control"
+              />
+            </div>
+
+            <div class="col-md-2 form-group">
+              <label class="control-label">Data Final</label>
+              <input
+                v-model="issuerValueEnd"
+                type="date"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <button
+                v-on:click="issuerEmmitNfe()"
+                type="button"
+                class="btn btn-success"
+              >
+                Emitir
+              </button>
+            </div>
+            <div class="col-md">
+              <!-- <p>{{ JSON.stringify(this.providerValue) }}</p> -->
             </div>
           </div>
         </div>

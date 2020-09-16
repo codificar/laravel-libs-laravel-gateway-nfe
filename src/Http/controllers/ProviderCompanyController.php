@@ -335,6 +335,7 @@ class ProviderCompanyController extends Controller
 		$institutions = NFEInstitution::getInstitutionByRequestsInterval($now, $latMonth);
 		$providers = NFEProvider::getProvidersByRequestsInterval($now, $latMonth);
 		$responseArray = [];
+
 		foreach ($users as $key => $user) {    
 			foreach ($providers as $providerKey => $provider) {  	           
 				$value = NFERequests::getProviderValueByUser($provider['provider_id'], $user['id'], $now, $latMonth);	
@@ -350,6 +351,21 @@ class ProviderCompanyController extends Controller
 			}                
 		}
 		
+		foreach ($institutions as $key => $institution) {
+			foreach ($providers as $providerKey => $provider) {  
+				$value = NFERequests::getProviderValueByUser($provider['provider_id'], $institution['id'], $now, $latMonth);
+				$providerCompany = Company::getProviderCompany($provider['provider_id']);
+				$responseObject = (object) [
+					'type' => "institution",					
+					'institution_id' => $institution['id'],
+					'provider_id' => $provider['provider_id'],
+					'value' => $value,
+					'gateway_company_id' => $providerCompany ? $providerCompany->gateway_company_id : false
+				];
+				if($value > 0) array_push($responseArray, $responseObject);		               
+			}
+		}   
+
 		return $responseArray;
 	}
 

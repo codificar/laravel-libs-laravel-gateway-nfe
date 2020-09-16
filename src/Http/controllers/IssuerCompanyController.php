@@ -12,6 +12,7 @@ use Codificar\GatewayNfe\Http\Requests\IssuerCompanyFormRequest;
 use View;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Queue;
 
 //Externals Models
 use Auth;
@@ -26,6 +27,7 @@ use Codificar\GatewayNfe\Models\NFEInstitution;
 //Internal Model
 use Codificar\GatewayNfe\Models\NFESettings;
 
+use Codificar\GatewayNfe\Jobs\SimulateGenerateIssuerNfeJob;
 class IssuerCompanyController extends Controller
 {	
 	
@@ -206,11 +208,51 @@ class IssuerCompanyController extends Controller
 		
 		return $responseData;
 	}
+
+	public function simulateValue(Request $request){
+		$now = $request->start_date;
+		$latMonth = $request->end_date;
+
+		//Get users and institutions
+		$providers = NFEProvider::getProvidersByRequestsInterval($now, $latMonth);
+		$users = NFEUser::getUsersByRequestsInterval($now, $latMonth);
+		$institutions = NFEInstitution::getInstitutionByRequestsInterval($now, $latMonth);
+	
+		$company = Company::getIssuerCompany();
+		$responseArray = [];
+		foreach ($users as $key => $user) {   			           
+				$value = (NFERequests::getSumIssuerValue($user['id'], $now, $latMonth));				
+				$responseObject = (object) [
+					'type' => "user",					
+					'user_id' => $user['id'],				
+					'value' => $value,
+					'gateway_company_id' => $company->gateway_company_id
+				];
+				if($value > 0) array_push($responseArray, $responseObject);				   
+			                
+		}
+
+		foreach ($institutions as $key => $institution) {   			           
+			$value = (NFERequests::getSumIssuerValue($institution['id'], $now, $latMonth));				
+			$responseObject = (object) [
+				'type' => "institution",					
+				'institution_id' => $institution['id'],				
+				'value' => $value,
+				'gateway_company_id' => $company->gateway_company_id
+			];
+			if($value > 0) array_push($responseArray, $responseObject);				   
+						
+	}
+		
+		return $responseArray;
+	}
+
 	
 
 	public function simulateJob(Request $request){	
+		$startDate = $request->start_date;
+		$endDate = $request->end_date;
 		
-		
-		return $responseArray;
+		Queue::push(new SimulateGenerateIssuerNfeJob($startDate, $endDate));
 	}
 }
