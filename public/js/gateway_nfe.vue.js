@@ -39756,21 +39756,20 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         while (1) {
           switch (_context8.prev = _context8.next) {
             case 0:
-              console.log("MOUNTED");
               this.provider_id = this.ProviderId;
-              _context8.next = 4;
+              _context8.next = 3;
               return this.getAddressUf();
 
-            case 4:
-
-              if (this.Company) {
+            case 3:
+              if (JSON.parse(this.Company)) {
+                console.log("IF TRUE", this.Company);
                 this.has_company = true;
                 this.company = JSON.parse(this.Company);
                 this.company.nationalSimpleOptant ? this.company.nationalSimpleOptant = true : this.company.nationalSimpleOptant = false;
                 this.company.culturalPromoter ? this.company.culturalPromoter = true : this.company.culturalPromoter = false;
               }
 
-            case 5:
+            case 4:
             case "end":
               return _context8.stop();
           }

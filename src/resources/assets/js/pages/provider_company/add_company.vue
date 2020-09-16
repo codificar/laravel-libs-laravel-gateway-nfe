@@ -172,17 +172,16 @@ export default {
     },
     validateCnpj() {},    
   },
-  async mounted() {
-    console.log("MOUNTED");
+  async mounted() {   
     this.provider_id = this.ProviderId;
     await this.getAddressUf();
-    
-    if (this.Company) {  
+    if (JSON.parse(this.Company)) {  
+      console.log("IF TRUE", this.Company);
       this.has_company = true;
       this.company = JSON.parse(this.Company);       
       this.company.nationalSimpleOptant ? this.company.nationalSimpleOptant = true : this.company.nationalSimpleOptant = false
       this.company.culturalPromoter ? this.company.culturalPromoter = true : this.company.culturalPromoter = false
-    }
+    }   
   },
 };
 </script>
