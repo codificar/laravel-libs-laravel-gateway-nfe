@@ -1493,6 +1493,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_provider_company_add_company_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__pages_provider_company_add_company_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_provider_company_company_certifie_vue__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_provider_company_company_certifie_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__pages_provider_company_company_certifie_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_simulate_nfe__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_simulate_nfe___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__pages_simulate_nfe__);
 window.vue = __webpack_require__(8);
 __webpack_require__(22);
 
@@ -1510,6 +1512,9 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_vue_
 
 //Provider Company
 
+
+
+//Simulate
 
 
 //Allows localization using trans()
@@ -1531,7 +1536,8 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
         add_provider_company: __WEBPACK_IMPORTED_MODULE_6__pages_provider_company_add_company_vue___default.a,
         provider_company_certifie: __WEBPACK_IMPORTED_MODULE_7__pages_provider_company_company_certifie_vue___default.a,
         add_issuer_company: __WEBPACK_IMPORTED_MODULE_4__pages_issuer_company_add_company_vue___default.a,
-        issuer_company_certifie: __WEBPACK_IMPORTED_MODULE_5__pages_issuer_company_company_certifie_vue___default.a
+        issuer_company_certifie: __WEBPACK_IMPORTED_MODULE_5__pages_issuer_company_company_certifie_vue___default.a,
+        simulate_nfe: __WEBPACK_IMPORTED_MODULE_8__pages_simulate_nfe___default.a
     },
 
     created: function created() {
@@ -35120,7 +35126,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["Edit", "Enviroment", "CreateRoute", "Company"],
+  props: ["Edit", "Enviroment", "CreateRoute", "UpdateRoute", "Company"],
   data: function data() {
     return {
       has_company: false,
@@ -35382,7 +35388,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             switch (_context6.prev = _context6.next) {
               case 0:
                 _context6.next = 2;
-                return __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/admin/issuer/company/update", this.company);
+                return __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(this.UpdateRoute, this.company);
 
               case 2:
                 _ref8 = _context6.sent;
@@ -35426,11 +35432,12 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             switch (_context7.prev = _context7.next) {
               case 0:
                 _context7.next = 2;
-                return __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/admin/issuer/company/store", this.company);
+                return __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(this.CreateRoute, this.company);
 
               case 2:
                 _ref10 = _context7.sent;
                 data = _ref10.data;
+
 
                 if (data.sucess) {
                   this.$swal({
@@ -38747,7 +38754,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["Company"],
+  props: ["Company", "LoginAuthRoute", "CertifieAuthRoute"],
   data: function data() {
     return {
       //tipoAutenticacao
@@ -38801,14 +38808,16 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
+
+                console.log("ROUTE", this.CertifieAuthRoute);
                 formData = new FormData();
 
                 formData.append('certified', this.certifie.certified);
                 formData.append('pass', this.certifie.pass);
-                _context.next = 6;
-                return __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/admin/issuer/company/certified", formData);
+                _context.next = 7;
+                return __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(this.CertifieAuthRoute, formData);
 
-              case 6:
+              case 7:
                 _ref2 = _context.sent;
                 data = _ref2.data;
 
@@ -38824,11 +38833,11 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                     type: "warning"
                   });
                 }
-                _context.next = 16;
+                _context.next = 17;
                 break;
 
-              case 11:
-                _context.prev = 11;
+              case 12:
+                _context.prev = 12;
                 _context.t0 = _context["catch"](0);
 
                 this.$swal({
@@ -38838,12 +38847,12 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 console.log("companyCertifie", _context.t0);
                 return _context.abrupt("return", false);
 
-              case 16:
+              case 17:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 11]]);
+        }, _callee, this, [[0, 12]]);
       }));
 
       function companyCertifie() {
@@ -38862,19 +38871,18 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/admin/issuer/company/login", this.auth);
+                return __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(this.LoginAuthRoute, this.auth);
 
               case 3:
                 _ref4 = _context2.sent;
                 data = _ref4.data;
-
 
                 if (data.sucess) {
                   this.$swal({
                     title: "Empresa autenticada com sucesso",
                     type: "success"
                   });
-                  window.location.href = '/admin/issuer/company/create';
+                  window.location.reload();
                 } else {
                   this.$swal({
                     title: "Valores invalidos",
@@ -38917,6 +38925,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
+              console.log("this.Company", this.Company);
               if (JSON.parse(this.Company)) {
                 this.company = JSON.parse(this.Company);
                 this.has_company = true;
@@ -38926,7 +38935,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 }
               }
 
-            case 1:
+            case 2:
             case "end":
               return _context3.stop();
           }
@@ -38988,8 +38997,25 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.auth.login,
+                                expression: "auth.login"
+                              }
+                            ],
                             staticClass: "form-control",
-                            attrs: { type: "text", id: "login" }
+                            attrs: { type: "text", id: "login" },
+                            domProps: { value: _vm.auth.login },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.auth, "login", $event.target.value)
+                              }
+                            }
                           }),
                           _vm._v(" "),
                           !_vm.$v.auth.login.required
@@ -39017,21 +39043,21 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.certifie.pass,
-                                expression: "certifie.pass"
+                                value: _vm.auth.password,
+                                expression: "auth.password"
                               }
                             ],
                             staticClass: "form-control",
                             attrs: { type: "password", id: "auth_pass" },
-                            domProps: { value: _vm.certifie.pass },
+                            domProps: { value: _vm.auth.password },
                             on: {
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
                                 }
                                 _vm.$set(
-                                  _vm.certifie,
-                                  "pass",
+                                  _vm.auth,
+                                  "password",
                                   $event.target.value
                                 )
                               }
@@ -39378,7 +39404,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["Edit", "Enviroment", "ProviderId", "CreateRoute", "Company"],
+  props: ["Edit", "Enviroment", "ProviderId", "CreateRoute", "UpdateRoute", "Company"],
   data: function data() {
     return {
       has_company: false,
@@ -39640,21 +39666,21 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             switch (_context6.prev = _context6.next) {
               case 0:
                 this.company.provider_id = this.provider_id;
-                console.log("company", this.company);
-                _context6.next = 4;
+
+                _context6.next = 3;
                 return __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/admin/provider/company/update", this.company);
 
-              case 4:
+              case 3:
                 _ref8 = _context6.sent;
                 data = _ref8.data;
 
-                console.log("data", data);
+
                 if (data.sucess) {
                   this.$swal({
                     title: "Empresa Atualizada com sucesso",
                     type: "success"
                   });
-                  window.location.href = "/admin/provider/company/create/" + this.provider_id;
+                  window.location.reload();
                 } else {
                   this.$swal({
                     title: data.error_code,
@@ -39663,7 +39689,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                   });
                 }
 
-              case 8:
+              case 6:
               case "end":
                 return _context6.stop();
             }
@@ -39687,7 +39713,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
               case 0:
                 this.company.provider_id = this.provider_id;
                 _context7.next = 3;
-                return __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/admin/provider/company/store", this.company);
+                return __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(this.CreateRoute, this.company);
 
               case 3:
                 _ref10 = _context7.sent;
@@ -39699,7 +39725,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                     title: "Empresa Registrada com sucesso",
                     type: "success"
                   });
-                  window.location.href = "/admin/provider/company/create/" + this.provider_id;
+                  window.location.reload();
                 } else {
                   this.$swal({
                     title: data.error_code,
@@ -39737,7 +39763,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
             case 4:
 
-              if (JSON.parse(this.Company)) {
+              if (this.Company) {
                 this.has_company = true;
                 this.company = JSON.parse(this.Company);
                 this.company.nationalSimpleOptant ? this.company.nationalSimpleOptant = true : this.company.nationalSimpleOptant = false;
@@ -40892,14 +40918,15 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 _context2.prev = 0;
 
                 this.auth.provider_id = this.ProviderId;
-                _context2.next = 4;
+                console.log("BODY", this.auth);
+                _context2.next = 5;
                 return __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("/admin/provider/company/login", this.auth);
 
-              case 4:
+              case 5:
                 _ref4 = _context2.sent;
                 data = _ref4.data;
 
-
+                console.log("data", data);
                 if (data.sucess) {
                   this.$swal({
                     title: "Empresa autenticada com sucesso",
@@ -40913,11 +40940,11 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                     type: "warning"
                   });
                 }
-                _context2.next = 14;
+                _context2.next = 16;
                 break;
 
-              case 9:
-                _context2.prev = 9;
+              case 11:
+                _context2.prev = 11;
                 _context2.t0 = _context2["catch"](0);
 
                 this.$swal({
@@ -40927,12 +40954,12 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 console.log("companyCertifie", _context2.t0);
                 return _context2.abrupt("return", false);
 
-              case 14:
+              case 16:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[0, 9]]);
+        }, _callee2, this, [[0, 11]]);
       }));
 
       function loginCompany() {
@@ -40971,7 +40998,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
                 _context3.t0 = _context3["catch"](0);
 
                 this.$swal({
-                  title: "Erro ao Autenticar certificado",
+                  title: "Erro ao trazer tipo de authenticação",
                   type: "error"
                 });
                 return _context3.abrupt("return", false);
@@ -40999,25 +41026,17 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
           switch (_context4.prev = _context4.next) {
             case 0:
               this.certifie.provider_id = this.ProviderId;
-
-              if (!JSON.parse(this.Company)) {
-                _context4.next = 7;
-                break;
+              if (JSON.parse(this.Company)) {
+                this.company = JSON.parse(this.Company);
+                this.has_company = true;
+                // await this.getAuthType();
+                if (this.company.isDocAuth) {
+                  this.certifie.nome = this.company.digitalCertificateName;
+                  this.certifie.dataVencimento = this.company.digitalExpirationDate;
+                }
               }
 
-              this.company = JSON.parse(this.Company);
-              this.has_company = true;
-
-              _context4.next = 6;
-              return this.getAuthType();
-
-            case 6:
-              if (this.company.isDocAuth) {
-                this.certifie.nome = this.company.digitalCertificateName;
-                this.certifie.dataVencimento = this.company.digitalExpirationDate;
-              }
-
-            case 7:
+            case 2:
             case "end":
               return _context4.stop();
           }
@@ -41396,6 +41415,420 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-a90330f2", module.exports)
+  }
+}
+
+/***/ }),
+/* 83 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(84)
+/* template */
+var __vue_template__ = __webpack_require__(85)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/resources/assets/js/pages/simulate_nfe/index.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2d71e1bd", Component.options)
+  } else {
+    hotAPI.reload("data-v-2d71e1bd", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 84 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["routeSimulateProviderValue", "routeSimulateIssuerValue", "routeSimulateProviderJob", "routeSimulateIssuerJob"],
+  data: function data() {
+    return {
+      providerValue: [],
+      providerValueStart: "",
+      providerValueEnd: ""
+    };
+  },
+
+
+  components: {},
+  methods: {
+    getProviderValue: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+        var response;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(this.routeSimulateProviderValue, {
+                  start_date: this.providerValueStart.replace(/-/g, "/"),
+                  end_date: this.providerValueEnd.replace(/-/g, "/")
+                });
+
+              case 3:
+                response = _context.sent;
+
+
+                this.providerValue = response.data;
+                _context.next = 10;
+                break;
+
+              case 7:
+                _context.prev = 7;
+                _context.t0 = _context["catch"](0);
+
+                console.log("getProviderValue error", _context.t0);
+
+              case 10:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[0, 7]]);
+      }));
+
+      function getProviderValue() {
+        return _ref.apply(this, arguments);
+      }
+
+      return getProviderValue;
+    }(),
+    providerEmmitNfe: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
+        var response;
+        return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(this.routeSimulateProviderJob, {
+                  start_date: this.providerValueStart.replace(/-/g, "/"),
+                  end_date: this.providerValueEnd.replace(/-/g, "/")
+                });
+
+              case 3:
+                response = _context2.sent;
+
+                alert("Notas Emitidas");
+                _context2.next = 10;
+                break;
+
+              case 7:
+                _context2.prev = 7;
+                _context2.t0 = _context2["catch"](0);
+
+                console.log("providerEmmitNfe error", _context2.t0);
+
+              case 10:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 7]]);
+      }));
+
+      function providerEmmitNfe() {
+        return _ref2.apply(this, arguments);
+      }
+
+      return providerEmmitNfe;
+    }()
+  },
+
+  mounted: function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
+      return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              console.log("MOUNTED SIMULATE");
+
+            case 1:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, this);
+    }));
+
+    function mounted() {
+      return _ref3.apply(this, arguments);
+    }
+
+    return mounted;
+  }()
+});
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "col-lg-12" }, [
+      _c("div", { staticClass: "card card-outline-info" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("h4", { staticClass: "m-b-0" }, [_vm._v("Valores do Provider")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-2 form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v("Data Inicial")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.providerValueStart,
+                    expression: "providerValueStart"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "date" },
+                domProps: { value: _vm.providerValueStart },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.providerValueStart = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-2 form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v("Data Final")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.providerValueEnd,
+                    expression: "providerValueEnd"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "date" },
+                domProps: { value: _vm.providerValueEnd },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.providerValueEnd = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-1" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.getProviderValue()
+                    }
+                  }
+                },
+                [_vm._v("\n              Pesquisar\n            ")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md" }, [
+              _c("p", [_vm._v(_vm._s(JSON.stringify(this.providerValue)))])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("h4", { staticClass: "m-b-0" }, [
+            _vm._v("Emitir notas do provider")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-2 form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v("Data Inicial")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.providerValueStart,
+                    expression: "providerValueStart"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "date" },
+                domProps: { value: _vm.providerValueStart },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.providerValueStart = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-2 form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v("Data Final")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.providerValueEnd,
+                    expression: "providerValueEnd"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "date" },
+                domProps: { value: _vm.providerValueEnd },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.providerValueEnd = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-3" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.providerEmmitNfe()
+                    }
+                  }
+                },
+                [_vm._v("\n              Emitir\n            ")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md" })
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._m(1)
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h4", { staticClass: "m-b-0 text-white" }, [_vm._v("Simulador")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-block" }, [
+      _c("h4", { staticClass: "m-b-0" }, [_vm._v("Emitente")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-2 form-group" }, [
+          _c("label", { staticClass: "control-label" }, [
+            _vm._v("Data Inicial")
+          ]),
+          _vm._v(" "),
+          _c("input", { staticClass: "form-control", attrs: { type: "date" } })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-2 form-group" }, [
+          _c("label", { staticClass: "control-label" }, [_vm._v("Data Final")]),
+          _vm._v(" "),
+          _c("input", { staticClass: "form-control", attrs: { type: "date" } })
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2d71e1bd", module.exports)
   }
 }
 
