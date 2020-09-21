@@ -96,6 +96,30 @@ class insertSettings extends Migration
                 'sub_category' => '0'
             ]
         );
+
+        Settings::updateOrCreate(
+            ['category' => 10, 'key' => 'nfe_gateway_enable'],
+            [
+                'key' => 'nfe_gateway_enable',
+                'value' => "false",
+                'tool_tip' => "Enable Emmit Nfe",
+                'page' => 1,
+                'category' => '10',
+                'sub_category' => '0'
+            ]
+        );
+
+        Settings::updateOrCreate(
+            ['category' => 10, 'key' => 'nfe_gateway_weebhook_key'],
+            [
+                'key' => 'nfe_gateway_weebhook_key',
+                'value' => "false",
+                'tool_tip' => "Enable Emmit Nfe",
+                'page' => 1,
+                'category' => '10',
+                'sub_category' => '0'
+            ]
+        );
     }
     /**
      * Reverse the migrations.

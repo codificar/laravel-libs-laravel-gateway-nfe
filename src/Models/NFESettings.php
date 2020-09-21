@@ -11,6 +11,22 @@ use Eloquent;
 use Settings;
 class NFESettings extends Settings
 {
+
+	/**
+	 * Get Emmit Nfe enable
+	 *
+	 * @return string
+	 */
+	public static function getNfeGatewayEnable()
+	{
+		$settings = Settings::where('key', 'nfe_gateway_enable')->first();
+
+		if ($settings)
+			return str_replace(" ", "", $settings->value);
+		else
+			return false;
+	}
+
 	/**
 	 * Get eNotas API key Gateway
 	 *
@@ -34,6 +50,21 @@ class NFESettings extends Settings
 	public static function getEnotasEnv()
 	{
 		$settings = Settings::where('key', 'nfe_gateway_env')->first();
+
+		if ($settings)
+			return str_replace(" ", "", $settings->value);
+		else
+			return null;
+	}
+
+	/**
+	 * Get WeebHook Key
+	 *
+	 * @return string
+	 */
+	public static function getNfeWeebHookKey()
+	{
+		$settings = Settings::where('key', 'nfe_gateway_weebhook_key')->first();
 
 		if ($settings)
 			return str_replace(" ", "", $settings->value);

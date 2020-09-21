@@ -13,6 +13,10 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Co
         Route::post('/issuer/emmit_job', array('as' => 'nfeIssuerJob', 'uses' => 'IssuerCompanyController@simulateJob'));
        
     });
+
+    Route::group(['prefix' => '/nfe'], function(){ 
+        Route::get('/', array('as' => 'NfeGatewaySettings', 'uses' => 'GatewayNFEController@simulate'));       
+    });
    
     Route::group(['prefix' => '/libs/settings'], function(){ 
         Route::get('/nfe_gateway', array('as' => 'NfeGatewaySettings', 'uses' => 'GatewaySettingsController@create'));
