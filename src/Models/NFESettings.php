@@ -21,9 +21,11 @@ class NFESettings extends Settings
 	{
 		$settings = Settings::where('key', 'nfe_gateway_enable')->first();
 
-		if ($settings)
-			return str_replace(" ", "", $settings->value);
-		else
+		if ($settings){
+			$cleanValue =  str_replace(" ", "", $settings->value);
+			$cleanValue == '1' ? $cleanValue  = true : $cleanValue = false;
+			return $cleanValue;
+		}else
 			return false;
 	}
 

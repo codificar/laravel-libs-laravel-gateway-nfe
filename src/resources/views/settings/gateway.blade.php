@@ -26,7 +26,7 @@
 					<div class="panel panel-primary" id="panel-zenvia">
 						<div class="panel-body">
 							<div class="row">
-								<div class="col-md-10">
+								<div class="col-md-8">
 									<div class="form-group">
 										<label for="gateway">Gateway</label>
 										<select class="select form-control select-gateway" name="nfe_gateway">
@@ -36,12 +36,27 @@
 										</select>
 									</div>
 								</div>
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="gateway">Habilitado</label>
+										<select class="select form-control" name="nfe_gateway_enable">
+											<option value="{{0}}" {{ $model->nfe_gateway_enable->value == "0" ? "selected" : "" }} >
+												Não
+											</option>		
+											<option value="{{1}}" {{ $model->nfe_gateway_enable->value == "1" ? "selected" : ""}} >
+												Sim
+											</option>																					
+										</select>
+									</div>
+								</div>
 							</div>
 						</div>
 				</div>
 				</div>
 			</div>
 			<!-- eNotas -->
+			@if($model->nfe_gateway_enable->value)
 			<div class="panel panel-default panel-gateway" id="enotas">
 				<div class="panel-heading">
 					<h3 class="panel-title">Configurações do eNotas</h3>
@@ -59,6 +74,7 @@
 								<div class="help-block with-errors"></div>
 							</div>
 						</div>	
+						
 						<div class="col-lg-3">
 							<div class="form-group">
 								<label for="usr">
@@ -117,7 +133,8 @@
 						</div>											
 					</div>					
 				</div>
-			</div>			
+			</div>	
+			@endif		
 		<div class="form-group text-right">
 			<button type="submit" class="btn btn-success">
 					<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> {{trans('keywords.save')}}
