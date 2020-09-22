@@ -1,6 +1,6 @@
 <?php
 //Admin
-Route::group(['middleware' => 'auth.admin'], function(){	
+// Route::group(['middleware' => 'auth.admin'], function(){	
 Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Controllers'], function(){	
 
     Route::group(['prefix' => '/simulate/nfe'], function(){ 
@@ -15,7 +15,8 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Co
     });
 
     Route::group(['prefix' => '/nfe'], function(){ 
-        Route::get('/', array('as' => 'NfeGatewaySettings', 'uses' => 'GatewayNFEController@simulate'));       
+        Route::get('/', array('as' => 'adminNfeIndexView', 'uses' => 'GatewayNFEController@index'));      
+        Route::post('/', array('as' => 'adminNfeIndex', 'uses' => 'GatewayNFEController@list'));       
     });
    
     Route::group(['prefix' => '/libs/settings'], function(){ 
@@ -52,7 +53,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Co
         Route::post('/nfe', array('as' => 'getNfe', 'uses' => 'ProviderCompanyController@getNfe'));
     });	
 });
-});
+// });
 
 //Provider API
 Route::group(['prefix' => '/api/v1/libs/gatewaynfe/provider/company', 'middleware' => 'auth.provider_api:api', 'namespace' => 'Codificar\GatewayNfe\Http\Controllers'], function () {

@@ -8,12 +8,27 @@ use App\Http\Controllers\Controller;
 //FormRequest
 use App\Http\Requests\GatewayNFEFormRequest;
 //Moedls
-use GatewayNFE;
+use Codificar\GatewayNfe\Models\GatewayNFE;
 use Log;
 
 //Laravel Uses
 use View;
 class GatewayNFEController extends Controller {   
+
+	public function index()
+	{		
+		$enviroment = 'admin';
+
+		return View::make('gateway_nfe::nfes.index')
+		->with('enviroment', $enviroment);
+	}
+
+	public function list()
+	{		
+		$list = GatewayNFE::all();
+	
+		return $list;
+	}
   
      /**
 		* @api{post}/api/v1/gatewey/invoice

@@ -20,6 +20,9 @@ import CompanyCertifie from './pages/provider_company/company_certifie.vue';
 //Simulate
 import SimulateNfe from './pages/simulate_nfe'
 
+//NFEs
+import nfesList from './pages/nfes'
+
 
 //Allows localization using trans()
 Vue.prototype.trans = (key) => {
@@ -43,7 +46,8 @@ new Vue({
         provider_company_certifie: CompanyCertifie,        
         add_issuer_company: AddIssuerCompany,        
         issuer_company_certifie: IssuerCompanyCertifie,
-        simulate_nfe: SimulateNfe,    
+        simulate_nfe: SimulateNfe,   
+        nfes_list: nfesList
     },
 
     created: function () {
