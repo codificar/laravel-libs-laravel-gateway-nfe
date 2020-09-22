@@ -101,7 +101,7 @@ class insertSettings extends Migration
             ['category' => 10, 'key' => 'nfe_gateway_enable'],
             [
                 'key' => 'nfe_gateway_enable',
-                'value' => "false",
+                'value' => "0",
                 'tool_tip' => "Enable Emmit Nfe",
                 'page' => 1,
                 'category' => '10',

@@ -39,16 +39,13 @@
 
 								<div class="col-md-4">
 									<div class="form-group">
-										<label for="gateway">Habilitado</label>
-										<select class="select form-control" name="nfe_gateway_enable">
-											<option value="{{0}}" {{ $model->nfe_gateway_enable->value == "0" ? "selected" : "" }} >
-												Não
-											</option>		
-											<option value="{{1}}" {{ $model->nfe_gateway_enable->value == "1" ? "selected" : ""}} >
-												Sim
-											</option>																					
-										</select>
-									</div>
+										<label for="usr">
+											Chave da API
+											<a href="#" class="question-field" data-toggle="tooltip" title="Chave de API disponível no painel do eNotas"><span class="mdi mdi-comment-question-outline"></span></a> <span class="required-field">*</span>
+										</label>
+										<input  id="gatewayApiKey" onblur="validateKey(this.value)" type="text" class="form-control" name="nfe_gateway_api_key" required data-error="{{trans('setting.field')}}" value="{{$model->nfe_gateway_api_key->value}}">
+										<div class="help-block with-errors"></div>
+									</div>									
 								</div>
 							</div>
 						</div>
@@ -56,8 +53,8 @@
 				</div>
 			</div>
 			<!-- eNotas -->
-			@if($model->nfe_gateway_enable->value)
-			<div class="panel panel-default panel-gateway" id="enotas">
+			
+			<div class="panel panel-default panel-gateway" style="display: none;" id="enotasSettingPainel">
 				<div class="panel-heading">
 					<h3 class="panel-title">Configurações do eNotas</h3>
 					<hr>
@@ -66,12 +63,15 @@
 					<div class="row">
 						<div class="col-lg-6">
 							<div class="form-group">
-								<label for="usr">
-									Chave da API
-									<a href="#" class="question-field" data-toggle="tooltip" title="Chave de API disponível no painel do eNotas"><span class="mdi mdi-comment-question-outline"></span></a> <span class="required-field">*</span>
-								</label>
-								<input type="text" class="form-control" name="nfe_gateway_api_key" required data-error="{{trans('setting.field')}}" value="{{$model->nfe_gateway_api_key->value}}">
-								<div class="help-block with-errors"></div>
+								<label for="gateway">Habilitado</label>
+								<select class="select form-control" name="nfe_gateway_enable">
+									<option value="{{0}}" {{ $model->nfe_gateway_enable->value == "0" ? "selected" : "" }} >
+										Não
+									</option>		
+									<option value="{{1}}" {{ $model->nfe_gateway_enable->value == "1" ? "selected" : ""}} >
+										Sim
+									</option>																					
+								</select>
 							</div>
 						</div>	
 						
@@ -134,7 +134,7 @@
 					</div>					
 				</div>
 			</div>	
-			@endif		
+				
 		<div class="form-group text-right">
 			<button type="submit" class="btn btn-success">
 					<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> {{trans('keywords.save')}}
@@ -156,21 +156,37 @@
 
 @section('javascripts')
 <script type="text/javascript">
-    $(document).ready(function(){
-        $('.select-gateway').change(function(){
-            var painel = $(this).val();
-			updatePainel(painel);
-        });
-		var updatePainel = function(painel){
-			$('.panel-gateway').filter(function() {
-                return $(this).css('display') == 'block';
-            }).fadeOut(300,function(){
-                console.log('#'+painel);
-                $('#'+painel).fadeIn('slow');
-            });
-		};
-		var selected_gateway = $('.select-gateway').val();
-		$('#'+selected_gateway).fadeIn('slow');
-    });
+
+	async function validateKey(key){
+		const enableGateway = document.getElementById('enotasSettingPainel')
+		
+		const url = 'https://api.enotasgw.com.br/v1/empresas?pageNumber=0&pageSize=5&searchBy=nome_fantasia&sortBy=nome_fantasia&sortDirection=asc'
+		const header = {
+			method: 'GET',
+			headers: { 
+				Accept: 'application/json', 
+				Authorization: `Basic ${key.trim()}`
+			}       
+    	}
+		
+		let response = await fetch(url, header)
+			.then(response => {			
+				console.log("response", response)	
+				if(response.status == 200) {
+					enableGateway.style.display = "block"; 
+				}else{
+					enableGateway.style.display = "none";
+					alert("Chave de API invalida")
+				}
+			})
+			.catch(error => {
+				console.log("error",error)   
+			});
+		
+	}
+	
+	const gatewayKey = document.getElementById('gatewayApiKey').value
+	validateKey(gatewayKey).then();
+   
 </script>
 @stop
