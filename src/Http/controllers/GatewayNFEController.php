@@ -7,12 +7,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 //FormRequest
 use App\Http\Requests\GatewayNFEFormRequest;
-//Moedls
+//Models
 use Codificar\GatewayNfe\Models\GatewayNFE;
 use Log;
 
 //Laravel Uses
 use View;
+use Illuminate\Pagination\Paginator;
 class GatewayNFEController extends Controller {   
 
 	public function index()
@@ -23,11 +24,35 @@ class GatewayNFEController extends Controller {
 		->with('enviroment', $enviroment);
 	}
 
-	public function list()
+	public function list(Request $request)
 	{		
-		$list = GatewayNFE::all();
+		$page = (int) $request->page;
+		$itemsPerPage = (int) $request->itemsPerPage;
+
+		$id = $request->id;
+		$issuerType = $request->issuerType;
+		$clientType = $request->clientType;
+		$startDate = $request->startDate;
+		$endDate = $request->endDate;
 	
-		return $list;
+		
+		//Get Data
+		$nfeList = GatewayNFE::search($id, $issuerType, $clientType, $startDate, $endDate);
+
+		//Paginate Structure
+		$recordsTotal = GatewayNFE::all()->count();	
+		Paginator::currentPageResolver(function () use ($page) {
+			return $page;
+		});
+
+		//Mount Response
+		$response = array(		
+			'records_total'   =>  $recordsTotal,
+			'records_filtered'   =>  $nfeList->count(),
+			'nfeList' => $nfeList->paginate($itemsPerPage)
+		);
+	
+		return $response;
 	}
   
      /**
@@ -70,7 +95,7 @@ class GatewayNFEController extends Controller {
 					[
 						'company_id' => $empresaId,
 						'nfe_id' => $nfeId,
-						'request_id' => $nfeIdExterno,
+						// 'request_id' => $nfeIdExterno,
 						'nfe_external_id' => $nfeIdExterno,
 						'nfe_status' => $nfeStatus,
 						'nfe_status_reason' => $nfeMotivoStatus,

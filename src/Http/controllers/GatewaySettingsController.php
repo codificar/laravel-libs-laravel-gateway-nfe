@@ -8,12 +8,17 @@ use View;
 use Input;
 use Redirect;
 use URL;
+use Illuminate\Http\Request;
 
 //Internal Model
 use Codificar\GatewayNfe\Models\NFESettings;
 use Codificar\GatewayNfe\Models\Company;
 use Codificar\GatewayNfe\Models\GatewayNFE;
 use Codificar\GatewayNfe\Jobs\GenerateProviderNfeJob;
+
+//External Packages
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\RequestException;
 
 
 class GatewaySettingsController extends Controller
@@ -85,6 +90,41 @@ class GatewaySettingsController extends Controller
 		}
 		
 		return $model;
+	}
+
+	/**
+	 *  Validate API KEY
+	 */
+	public function updateEnableGateway(Request $request)
+	{			
+		$settings = NFESettings::where('key', 'nfe_gateway_enable')->first();
+		$url = 'https://api.enotasgw.com.br/v1/empresas?pageNumber=0&pageSize=5&searchBy=nome_fantasia&sortBy=nome_fantasia&sortDirection=asc';
+		$client = new \GuzzleHttp\Client();
+		$responseData = array('data' => $request->apiKey, 'success' => true, 'statusCode' => 200); 
+		
+		try {			
+			$response = $client->request('GET', $url, [
+				'headers' => [
+					'Authorization'     =>  "Basic ".$request->apiKey,
+					'Accept' => 'application/json',
+				]
+			]);			
+			$statusCode = $response->getStatusCode();
+			if($statusCode != 200){				
+				$settings->value = 0;
+				$settings->save();
+				$responseData['success']	= false;
+				$responseData['statusCode']	= 401;
+			}
+			
+		} catch (RequestException $e) {		
+			$settings->value = 0;
+			$settings->save();
+			$responseData['success']	= false;
+			$responseData['statusCode']	= 401;
+		}
+		return response($responseData, $responseData['statusCode']);	
+
 	}
 
 }

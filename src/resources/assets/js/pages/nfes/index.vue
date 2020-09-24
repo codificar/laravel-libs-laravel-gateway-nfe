@@ -1,38 +1,75 @@
 <script>
 import axios from "axios";
+import TableFilter from "../Layout/TableFilter";
+import ContentTable from "./ContentTable";
+import ContentFilter from "./ContentFilter";
 
 export default {
   props: ["indexRoute"],
+  components: {
+    TableFilter,
+    ContentFilter,
+    ContentTable,
+  },
   data() {
     return {
-      nfeList: [],
+      nfeList: {},
+      page: 1,
+      filter: {
+        id: null,
+        issuerType: null,
+        clientType: null,
+        startDate: null,
+        endDate: null
+      },
     };
   },
   methods: {
-      async getNFEs(){
-          const response = await axios.post(this.indexRoute)
-          console.log("RESPONSE", response);
-      }
+    async filterData(page = 1, filter) {     
+      const { data } = await axios.post(this.indexRoute, {
+        id: filter.id,
+        issuerType: filter.issuerType,
+        clientType: filter.clientType,
+        startDate: filter.startDate,
+        endDate: filter.endDate,
+        page: page,
+        itemsperpage: 20,
+      });
+      this.nfeList = data.nfeList;
+    },
+    async cleanFilters() {
+      this.filter = await {
+        id: null,
+      };
+      this.filterData(this.page, this.filter);
+    },
   },
   async mounted() {
-    await this.getNFEs()
+    await this.filterData(this.page, this.filter);
   },
 };
 </script>
 <template>
-  <div>
-    <!-- Login e Senha -->
-    <div class="col-lg-12">
-      <div class="card card-outline-info">
-        <div class="card-header">
-          <h4 class="m-b-0 text-white">NFEs</h4>
-        </div>
-        <div class="card-block">
-          <div class="row">
-            <div class="col-md-12">DATA</div>
-          </div>
-        </div>
-      </div>
+  <TableFilter>
+    <h4 slot="card-title" class="m-b-0 text-white">Filtros</h4>
+
+    <h3 slot="filter-title" class="box-title">Filtrar NFEs</h3>
+    <div slot="filter">
+      <ContentFilter
+        :filter="filter"
+        :page="page"
+        @filter-data="filterData"
+        @clean-filter="cleanFilters"
+      />
     </div>
-  </div>
+
+    <h3 slot="content-title" class="box-title">NFEs</h3>
+    <div slot="content">
+      <ContentTable
+        :filter="filter"
+        @filter-data="filterData"
+        :nfeList="nfeList"
+      />
+    </div>
+  </TableFilter>
 </template>

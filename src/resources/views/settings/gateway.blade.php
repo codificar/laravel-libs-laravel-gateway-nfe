@@ -26,7 +26,7 @@
 					<div class="panel panel-primary" id="panel-zenvia">
 						<div class="panel-body">
 							<div class="row">
-								<div class="col-md-8">
+								<div class="col-md-4">
 									<div class="form-group">
 										<label for="gateway">Gateway</label>
 										<select class="select form-control select-gateway" name="nfe_gateway">
@@ -37,7 +37,7 @@
 									</div>
 								</div>
 
-								<div class="col-md-4">
+								<div class="col-md-8">
 									<div class="form-group">
 										<label for="usr">
 											Chave da API
@@ -51,10 +51,18 @@
 						</div>
 				</div>
 				</div>
-			</div>
-			<!-- eNotas -->
 			
-			<div class="panel panel-default panel-gateway" style="display: none;" id="enotasSettingPainel">
+				<div id="isLoading">
+					<svg class="circular" viewBox="25 25 50 50">
+						<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+					</svg>
+				</div>
+				
+			</div>			
+			
+			
+			<div class="panel panel-default panel-gateway" style="display: none;" id="enotasSettingPainel">		
+			
 				<div class="panel-heading">
 					<h3 class="panel-title">Configurações do eNotas</h3>
 					<hr>
@@ -148,41 +156,48 @@
 
 @section('styles')
 <style>
-	.panel-gateway{
-		display:none;
-	}
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 </style>
 @stop
 
 @section('javascripts')
 <script type="text/javascript">
-
 	async function validateKey(key){
-		const enableGateway = document.getElementById('enotasSettingPainel')
-		
-		const url = 'https://api.enotasgw.com.br/v1/empresas?pageNumber=0&pageSize=5&searchBy=nome_fantasia&sortBy=nome_fantasia&sortDirection=asc'
+		const isLoading = document.getElementById('isLoading')
+		isLoading.style.display = 'block'
+
+		const enableGateway = document.getElementById('enotasSettingPainel')		
+		const url = '/admin/libs/settings/nfe_gateway/enable'		
 		const header = {
-			method: 'GET',
-			headers: { 
-				Accept: 'application/json', 
-				Authorization: `Basic ${key.trim()}`
-			}       
-    	}
-		
-		let response = await fetch(url, header)
-			.then(response => {			
-				console.log("response", response)	
-				if(response.status == 200) {
-					enableGateway.style.display = "block"; 
-				}else{
-					enableGateway.style.display = "none";
-					alert("Chave de API invalida")
-				}
-			})
-			.catch(error => {
-				console.log("error",error)   
-			});
-		
+			method: 'POST',			
+			body: JSON.stringify({apiKey: key}),
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			}   
+    	}		
+	
+		const response = await fetch(url, header)
+		const {success} = await response.json()
+
+		if(success){
+			enableGateway.style.display = 'block'
+		}else {
+			enableGateway.style.display = 'none'		
+		}
+		isLoading.style.display = 'none'		
 	}
 	
 	const gatewayKey = document.getElementById('gatewayApiKey').value

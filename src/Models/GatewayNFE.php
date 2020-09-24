@@ -33,9 +33,19 @@ class GatewayNFE extends Eloquent
 	//issuerType
 	const issuerTypeProvider = "provider";
 	const issuerTypeIssuer = "issuer";
+
 	//clientType
 	const clientTypeUser = "user";
 	const clientTypeUserInstitution = "institution";
+
+	/**
+	 * Emmit NFE
+	 * @param $id
+	 * @param $gateweyData
+	 * @param $issuerType
+	 * @param $clientType
+	 * @return \Models\GatewayNFE
+	*/
 
 	public function emmit($id, $gateweyData, $value, $issuerType, $clientType){
 		$gatewayNFE = GatewayNFE::findOrFail($id);	
@@ -58,6 +68,12 @@ class GatewayNFE extends Eloquent
 		return $gatewayNFE;		
 	}
 
+	/**
+	 * Update NFE with Gateway WeebHook
+	 * @param GatewayNFE
+	 * @return \Models\GatewayNFE
+	*/
+
 	public function WeebHookStore($request){	
 		$empresaId = $request->empresaId;
 		$nfeId = $request->nfeId;
@@ -76,7 +92,7 @@ class GatewayNFE extends Eloquent
 				[
 					'company_id' => $empresaId,
 					'nfe_id' => $nfeId,
-					'request_id' => $nfeIdExterno,
+					// 'request_id' => $nfeIdExterno,
 					'nfe_external_id' => $nfeIdExterno,
 					'nfe_status' => $nfeStatus,
 					'nfe_status_reason' => $nfeMotivoStatus,
@@ -91,6 +107,12 @@ class GatewayNFE extends Eloquent
 		);				
 		return $nfe;		
 	}
+
+	/**
+	 * Store on database one NFE
+	 * @param GatewayNFE
+	 * @return \Models\GatewayNFE
+	*/
 
 	public function gatewayDataStore($id, $gateweyData, $value, $issuerType, $clientType){
 		$gatewayNFE = GatewayNFE::findOrFail($id);	
@@ -113,6 +135,16 @@ class GatewayNFE extends Eloquent
 		return $gatewayNFE;		
 	}
 
+
+	/**
+	 * Emmit a NFE from providers to users
+	 * @param providers
+	 * @param users
+	 * @param service
+	 * @param startDate
+	 * @param endDate
+	
+	*/
 	public function emmitProviderToUserNfe($providers, $users, $service, $startDate, $endDate){
 		foreach ($users as $key => $user) {    
 			foreach ($providers as $providerKey => $provider) {  	           
@@ -131,6 +163,15 @@ class GatewayNFE extends Eloquent
 		}
 	}	
 
+	/**
+	 * Emmit a NFE from providers to institution
+	 * @param providers
+	 * @param institutions
+	 * @param service
+	 * @param startDate
+	 * @param endDate
+	
+	*/
 	public function emmitProviderToInstitutionNfe($providers, $institutions, $service, $startDate, $endDate){
 		foreach ($institutions as $key => $institution) {
 			foreach ($providers as $providerKey => $provider) {  
@@ -148,7 +189,7 @@ class GatewayNFE extends Eloquent
 		}     
 	}
 
-	//Store NFE on Database and on Gateway
+	//Store NFE on Database and Gateway
 	private static function emmitOnGateway($companyId, $client, $service, $value, $issuerType, $clientType){
         //Store on database
         $gatewayNFE = new GatewayNFE;
@@ -167,6 +208,43 @@ class GatewayNFE extends Eloquent
         }else{
             Log::error("Generate NFE Error", $response);
         }
-    }
+	}
+	
+	/**
+	 * Filter provider in many ways
+	 * @param $id
+	 * @param $issuerType
+	 * @param $clientType
+	 * @param $startDate
+	 * @param $endDate
+	 * @param $order
+	 * @return \Illuminate\Pagination\Paginator
+	 */
+	public static function search($id = null, $issuerType = null, $clientType = null, $startDate = null, $endDate = null, $order = null)
+	{
+		//Joins and Selects
+		$query = self::select('*');
+
+		//Where filters
+		if ($id != null) $query->where('id', '=', $id);
+		if ($issuerType != null) $query->where('issuer_type', '=', $issuerType);
+		if ($clientType != null) $query->where('client_type', '=', $clientType);
+		if ($startDate != null) $query->whereDate('created_at', '>=', $startDate);
+		if ($endDate != null) $query->whereDate('created_at', '<=', $endDate);
+
+
+
+		//Order By
+		if ($order == null) {
+			$query->orderBy('id', 'DESC');
+		} else {
+			if ($order == 0)
+				$query->orderBy($type, 'asc');
+			else if ($order == 1)
+				$query->orderBy($type, 'desc');
+		}
+
+		return $query;
+	}
 	
 }

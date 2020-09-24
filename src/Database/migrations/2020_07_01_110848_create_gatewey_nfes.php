@@ -15,7 +15,7 @@ class CreateGateweyNfes extends Migration
     {
         Schema::create('gateway_nfes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('request_id')->nullable();    
+            // $table->string('request_id')->nullable();    
             $table->string('company_id')->nullable();   
 
             $table->string('nfe_id')->nullable();      

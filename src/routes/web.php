@@ -22,6 +22,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Co
     Route::group(['prefix' => '/libs/settings'], function(){ 
         Route::get('/nfe_gateway', array('as' => 'NfeGatewaySettings', 'uses' => 'GatewaySettingsController@create'));
         Route::post('/nfe_gateway', array('as' => 'saveNfeSettings', 'uses' => 'GatewaySettingsController@store'));
+        Route::post('/nfe_gateway/enable', array('as' => 'saveNfeSettings', 'uses' => 'GatewaySettingsController@updateEnableGateway'));
     });
     //Issuer
     Route::group(['prefix' => '/issuer/company'], function(){
