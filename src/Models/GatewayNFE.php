@@ -53,7 +53,7 @@ class GatewayNFE extends Eloquent
 		$gatewayNFE->nfe_external_id = $gatewayNFE->id;
 		$gatewayNFE->nfe_status = $gateweyData->status;
 		$gatewayNFE->nfe_pdf = $gateweyData->linkDownloadPDF;
-		$gatewayNFE->nfe_xml = $gateweyData->status;
+		$gatewayNFE->nfe_xml = $gateweyData->linkDownloadXML;
 		$gatewayNFE->nfe_number = $gateweyData->numero;
 		$gatewayNFE->nfe_verification_code = $gateweyData->codigoVerificacao;
 		$gatewayNFE->nfe_rps_number = $gateweyData->numeroRps;
@@ -67,47 +67,7 @@ class GatewayNFE extends Eloquent
 		$gatewayNFE->save();
 		return $gatewayNFE;		
 	}
-
-	/**
-	 * Update NFE with Gateway WeebHook
-	 * @param GatewayNFE
-	 * @return \Models\GatewayNFE
-	*/
-
-	public function WeebHookStore($request){	
-		$empresaId = $request->empresaId;
-		$nfeId = $request->nfeId;
-		$nfeIdExterno = $request->nfeIdExterno;
-		$nfeStatus = $request->nfeStatus;
-		$nfeMotivoStatus = $request->nfeMotivoStatus;
-		$nfeLinkPdf = $request->nfeLinkPdf;
-		$nfeLinkXml = $request->nfeLinkXml;
-		$nfeNumero = $request->nfeNumero;
-		$nfeCodigoVerificacao = $request->nfeCodigoVerificacao;
-		$nfeNumeroRps = $request->nfeNumeroRps;
-		$nfeSerieRps = $request->nfeSerieRps;
-		$nfeDataCompetencia = $request->nfeDataCompetencia;			
-		$nfe = GatewayNFE::updateOrCreate(
-				['nfe_id' => $request->nfeId],
-				[
-					'company_id' => $empresaId,
-					'nfe_id' => $nfeId,
-					// 'request_id' => $nfeIdExterno,
-					'nfe_external_id' => $nfeIdExterno,
-					'nfe_status' => $nfeStatus,
-					'nfe_status_reason' => $nfeMotivoStatus,
-					'nfe_pdf' => $nfeLinkPdf,
-					'nfe_xml' => $nfeLinkXml,
-					'nfe_number' => $nfeNumero,
-					'nfe_verification_code' => $nfeCodigoVerificacao,
-					'nfe_rps_number' => $nfeNumeroRps,
-					'nfe_rps_serie' => $nfeSerieRps,
-					'nfe_competence_date' => $nfeDataCompetencia,					
-				]
-		);				
-		return $nfe;		
-	}
-
+	
 	/**
 	 * Store on database one NFE
 	 * @param GatewayNFE
@@ -120,7 +80,7 @@ class GatewayNFE extends Eloquent
 		$gatewayNFE->nfe_external_id = $gatewayNFE->id;
 		$gatewayNFE->nfe_status = $gateweyData->status;
 		$gatewayNFE->nfe_pdf = $gateweyData->linkDownloadPDF;
-		$gatewayNFE->nfe_xml = $gateweyData->status;
+		$gatewayNFE->nfe_xml = $gateweyData->linkDownloadXML;
 		$gatewayNFE->nfe_number = $gateweyData->numero;
 		$gatewayNFE->nfe_verification_code = $gateweyData->codigoVerificacao;
 		$gatewayNFE->nfe_rps_number = $gateweyData->numeroRps;
