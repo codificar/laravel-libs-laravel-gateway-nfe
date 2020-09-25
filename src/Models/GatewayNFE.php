@@ -183,7 +183,7 @@ class GatewayNFE extends Eloquent
 	public static function search($id = null, $issuerType = null, $clientType = null, $startDate = null, $endDate = null, $order = null)
 	{
 		//Joins and Selects
-		$query = self::select('*');
+		$query = self::select('*')->whereNotNull('nfe_id');
 
 		//Where filters
 		if ($id != null) $query->where('id', '=', $id);

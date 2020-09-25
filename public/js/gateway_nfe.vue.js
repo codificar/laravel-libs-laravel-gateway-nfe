@@ -42075,7 +42075,7 @@ var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(87)
 /* template */
-var __vue_template__ = __webpack_require__(100)
+var __vue_template__ = __webpack_require__(103)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -42127,7 +42127,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Layout_TableFilter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Layout_TableFilter__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ContentTable__ = __webpack_require__(96);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ContentTable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__ContentTable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ContentFilter__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ContentFilter__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ContentFilter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__ContentFilter__);
 
 
@@ -43699,89 +43699,12 @@ if (false) {
 /* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("TableFilter", [
-    _c(
-      "h4",
-      {
-        staticClass: "m-b-0 text-white",
-        attrs: { slot: "card-title" },
-        slot: "card-title"
-      },
-      [_vm._v("Filtros")]
-    ),
-    _vm._v(" "),
-    _c(
-      "h3",
-      {
-        staticClass: "box-title",
-        attrs: { slot: "filter-title" },
-        slot: "filter-title"
-      },
-      [_vm._v("Filtrar NFEs")]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { attrs: { slot: "filter" }, slot: "filter" },
-      [
-        _c("ContentFilter", {
-          attrs: { filter: _vm.filter, page: _vm.page },
-          on: {
-            "filter-data": _vm.filterData,
-            "clean-filter": _vm.cleanFilters
-          }
-        })
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "h3",
-      {
-        staticClass: "box-title",
-        attrs: { slot: "content-title" },
-        slot: "content-title"
-      },
-      [_vm._v("NFEs")]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { attrs: { slot: "content" }, slot: "content" },
-      [
-        _c("ContentTable", {
-          attrs: { filter: _vm.filter, nfeList: _vm.nfeList },
-          on: { "filter-data": _vm.filterData }
-        })
-      ],
-      1
-    )
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-5c493c11", module.exports)
-  }
-}
-
-/***/ }),
-/* 101 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var disposed = false
 var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(102)
+var __vue_script__ = __webpack_require__(101)
 /* template */
-var __vue_template__ = __webpack_require__(103)
+var __vue_template__ = __webpack_require__(102)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -43820,7 +43743,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 102 */
+/* 101 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -43989,7 +43912,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 });
 
 /***/ }),
-/* 103 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -44229,6 +44152,83 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-dd6d5c20", module.exports)
+  }
+}
+
+/***/ }),
+/* 103 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("TableFilter", [
+    _c(
+      "h4",
+      {
+        staticClass: "m-b-0 text-white",
+        attrs: { slot: "card-title" },
+        slot: "card-title"
+      },
+      [_vm._v("Filtros")]
+    ),
+    _vm._v(" "),
+    _c(
+      "h3",
+      {
+        staticClass: "box-title",
+        attrs: { slot: "filter-title" },
+        slot: "filter-title"
+      },
+      [_vm._v("Filtrar NFEs")]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { attrs: { slot: "filter" }, slot: "filter" },
+      [
+        _c("ContentFilter", {
+          attrs: { filter: _vm.filter, page: _vm.page },
+          on: {
+            "filter-data": _vm.filterData,
+            "clean-filter": _vm.cleanFilters
+          }
+        })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "h3",
+      {
+        staticClass: "box-title",
+        attrs: { slot: "content-title" },
+        slot: "content-title"
+      },
+      [_vm._v("NFEs")]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { attrs: { slot: "content" }, slot: "content" },
+      [
+        _c("ContentTable", {
+          attrs: { filter: _vm.filter, nfeList: _vm.nfeList },
+          on: { "filter-data": _vm.filterData }
+        })
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5c493c11", module.exports)
   }
 }
 
