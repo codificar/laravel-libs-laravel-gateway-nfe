@@ -174,7 +174,7 @@
 
 @section('javascripts')
 <script type="text/javascript">
-	async function validateKey(key){
+	async function validateKey(key, firstCall = false){
 		const isLoading = document.getElementById('isLoading')
 		isLoading.style.display = 'block'
 
@@ -191,17 +191,18 @@
 	
 		const response = await fetch(url, header)
 		const {success} = await response.json()
-
+	
 		if(success){
 			enableGateway.style.display = 'block'
 		}else {
+			if(!firstCall)alert("Chave de API invalida")
 			enableGateway.style.display = 'none'		
 		}
 		isLoading.style.display = 'none'		
 	}
 	
 	const gatewayKey = document.getElementById('gatewayApiKey').value
-	validateKey(gatewayKey).then();
+	validateKey(gatewayKey, true).then();
    
 </script>
 @stop
