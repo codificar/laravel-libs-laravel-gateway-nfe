@@ -64,12 +64,14 @@
 			<div class="panel panel-default panel-gateway" style="display: none;" id="enotasSettingPainel">		
 			
 				<div class="panel-heading">
-					<h3 class="panel-title">Configurações do eNotas</h3>
+					<h2 class="panel-title">Configurações do eNotas</h2>
 					<hr>
 				</div>
+				<h4 class="panel-title">Rota para o webhook: {{ URL::Route('nfeWebHook') }}</h4>
+				<hr>
 				<div class="panel-body">
 					<div class="row">
-						<div class="col-lg-6">
+						<div class="col-lg-3">
 							<div class="form-group">
 								<label for="gateway">Habilitado</label>
 								<select class="select form-control" name="nfe_gateway_enable">
@@ -80,6 +82,17 @@
 										Sim
 									</option>																					
 								</select>
+							</div>
+						</div>	
+
+						<div class="col-lg-3">
+							<label for="gatewayWeebHookKey">Chave para o weebhook</label>	
+							<div class="input-group">												
+								<input id="gatewayWeebHookKey" type="email" class="form-control" name="nfe_gateway_weebhook_key" required data-error="{{trans('setting.field')}}"
+								value="{{$model->nfe_gateway_weebhook_key->value}}" readonly>
+								<div class="input-group-prepend">
+									<button onClick="generateHash()" class="p-2 btn btn-info" type="button">Gerar Chave</button>
+								</div>
 							</div>
 						</div>	
 						
@@ -173,7 +186,15 @@
 @stop
 
 @section('javascripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
 <script type="text/javascript">
+	function generateHash() {		
+		const aleatoryString = Math.random().toString(36).substring(7); 	
+		const hash = CryptoJS.MD5(aleatoryString);
+   		document.getElementById('gatewayWeebHookKey').value = hash
+	}
+
 	async function validateKey(key, firstCall = false){
 		const isLoading = document.getElementById('isLoading')
 		isLoading.style.display = 'block'
@@ -200,9 +221,9 @@
 		}
 		isLoading.style.display = 'none'		
 	}
-	
 	const gatewayKey = document.getElementById('gatewayApiKey').value
 	validateKey(gatewayKey, true).then();
+	
    
 </script>
 @stop

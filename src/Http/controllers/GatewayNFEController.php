@@ -9,11 +9,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\GatewayNFEFormRequest;
 //Models
 use Codificar\GatewayNfe\Models\GatewayNFE;
-use Log;
+use Codificar\GatewayNfe\Models\NFESettings;
 
 //Laravel Uses
 use View;
 use Illuminate\Pagination\Paginator;
+use Log;
 class GatewayNFEController extends Controller {   
 
 	public function index()
@@ -76,7 +77,20 @@ class GatewayNFEController extends Controller {
 		* @return Json
      */
 	public function WeebHookStore(Request $request){	
-        $responseData = array('data' => [], 'sucess' => true); 
+		//x-token	
+		$responseData = array('data' => [], 'sucess' => true); 
+		$token =  $request->headers->get('x-token');
+		$settingToken = NFESettings::getNfeWeebHookKey();
+
+		if($token != $settingToken){
+			Log::error('unauthorizedException WeebHook Key');
+            $responseData['sucess'] = false;
+			$responseData['errors'] = "unauthorizedException";
+			$responseData['error_code'] = 401;
+			return response()->json($responseData)->setStatusCode(401);	
+		}
+
+       
         try {
 			$empresaId = $request->empresaId;
 			$nfeId = $request->nfeId;

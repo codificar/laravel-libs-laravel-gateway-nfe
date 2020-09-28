@@ -4,7 +4,7 @@ Route::group(['middleware' => 'auth.admin'], function(){
 Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Controllers'], function(){	
 
     Route::group(['prefix' => '/simulate/nfe'], function(){ 
-        Route::get('/', array('as' => 'NfeGatewaySettings', 'uses' => 'GatewayNFEController@simulate'));
+        Route::get('/', array('as' => 'NfeGatewaySimulate', 'uses' => 'GatewayNFEController@simulate'));
 
         Route::post('/provider/value', array('as' => 'nfeProviderValue', 'uses' => 'ProviderCompanyController@simulateValue'));
         Route::post('/provider/emmit_job', array('as' => 'nfeProviderJob', 'uses' => 'ProviderCompanyController@simulateJob'));
@@ -22,7 +22,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Co
     Route::group(['prefix' => '/libs/settings'], function(){ 
         Route::get('/nfe_gateway', array('as' => 'NfeGatewaySettings', 'uses' => 'GatewaySettingsController@create'));
         Route::post('/nfe_gateway', array('as' => 'saveNfeSettings', 'uses' => 'GatewaySettingsController@store'));
-        Route::post('/nfe_gateway/enable', array('as' => 'saveNfeSettings', 'uses' => 'GatewaySettingsController@updateEnableGateway'));
+        Route::post('/nfe_gateway/enable', array('as' => 'validateApiKey', 'uses' => 'GatewaySettingsController@updateEnableGateway'));
     });
     //Issuer
     Route::group(['prefix' => '/issuer/company'], function(){
@@ -38,7 +38,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Co
     //Provider
     Route::group(['prefix' => '/provider/company'], function(){
         //Company
-        Route::get('gateway/{id}', array('as' => 'adminGetProviderCompany', 'uses' => 'ProviderCompanyController@getProviderCompanyOnGateway'));
+        Route::get('gateway/{id}', array('as' => 'adminGetGatewayCompany', 'uses' => 'ProviderCompanyController@getProviderCompanyOnGateway'));
         Route::get('/{id}', array('as' => 'adminGetProviderCompany', 'uses' => 'ProviderCompanyController@getProviderCompany'));
         Route::get('/create/{id}', array('as' => 'adminCreateProviderCompany', 'uses' => 'ProviderCompanyController@create'));
         Route::post('/store', array('as' => 'adminCompanyStore', 'uses' => 'ProviderCompanyController@store'));      
@@ -50,21 +50,21 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Co
         Route::post('/login', array('as' => 'adminLoginAuth', 'uses' => 'ProviderCompanyController@authLogin'));       
 
         //NFE
-        Route::post('/nfe/generate', array('as' => 'adminSetCompanyCertifie', 'uses' => 'ProviderCompanyController@generateNfe'));  
-        Route::post('/nfe', array('as' => 'getNfe', 'uses' => 'ProviderCompanyController@getNfe'));
+        Route::post('/nfe/generate', array('as' => 'adminNfeGenerate', 'uses' => 'ProviderCompanyController@generateNfe'));  
+        Route::post('/nfe', array('as' => 'adminGetNfe', 'uses' => 'ProviderCompanyController@getNfe'));
     });	
 });
 });
 
 Route::group(['namespace' => 'Codificar\GatewayNfe\Http\Controllers', 'prefix' => '/api/v1/libs/gatewaynfe/weebhook'], function () {  
-    Route::post('/', array('as' => 'adminSaveCard', 'uses' => 'GatewayNFEController@WeebHookStore'));
+    Route::post('/', array('as' => 'nfeWebHook', 'uses' => 'GatewayNFEController@WeebHookStore'));
 });
 
 //Provider API
 Route::group(['prefix' => '/api/v1/libs/gatewaynfe/provider/company', 'middleware' => 'auth.provider_api:api', 'namespace' => 'Codificar\GatewayNfe\Http\Controllers'], function () {
     Route::get('/{id}', array('as' => 'providerApiGetProviderCompany', 'uses' => 'ProviderCompanyController@getProviderCompany'));   
-    Route::post('/store/address', array('as' => 'providerApiCompanyStore', 'uses' => 'ProviderCompanyController@storeAddress'));
-    Route::post('/store/info', array('as' => 'providerApiCompanyStore', 'uses' => 'ProviderCompanyController@storeInfo'));
+    Route::post('/store/address', array('as' => 'providerApiCompanyStoreAddress', 'uses' => 'ProviderCompanyController@storeAddress'));
+    Route::post('/store/info', array('as' => 'providerApiCompanyStoreInfo', 'uses' => 'ProviderCompanyController@storeInfo'));
     Route::post('/update', array('as' => 'providerApiCompanyUpdate', 'uses' => 'ProviderCompanyController@update'));
 
     Route::post('/auth/certified', array('as' => 'providerApiSetCompanyCertifie', 'uses' => 'ProviderCompanyController@setCompanyCertifie'));
