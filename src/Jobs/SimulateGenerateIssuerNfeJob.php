@@ -47,8 +47,9 @@ class SimulateGenerateIssuerNfeJob implements ShouldQueue
      * @return void
      */
     public function handle()
-    {
+    {       
         try {
+           
             $service = array(
                 'descricao' => NFESettings::getNfeServiceDescription()
             );
@@ -70,7 +71,7 @@ class SimulateGenerateIssuerNfeJob implements ShouldQueue
                 foreach ($users as $key => $user) {               
                     // $value = (NFERequests::getSumIssuerValue($user['id'], $now, $latMonth) * -1);
                     $value = (NFERequests::getSumIssuerValue($user['id'], $now, $latMonth));
-                    $companyId = "ecda2c6f-333a-4130-8eba-0c01452f0600";
+                    // $companyId = "ecda2c6f-333a-4130-8eba-0c01452f0600";
                     if($value > 0) $this->emmit($companyId, $user, $service, $value, GatewayNFE::issuerTypeProvider, GatewayNFE::clientTypeUser);
                     
                 }
@@ -78,10 +79,10 @@ class SimulateGenerateIssuerNfeJob implements ShouldQueue
                 foreach ($institutions as $key => $institution) {
                     // $value = (NFERequests::getSumIssuerValue($institution['id'], $now,  $latMonth) * -1);	
                     $value = (NFERequests::getSumIssuerValue($institution['id'], $now,  $latMonth));	
-                    $companyId = "ecda2c6f-333a-4130-8eba-0c01452f0600";
+                    // $companyId = "ecda2c6f-333a-4130-8eba-0c01452f0600";
                     if($value > 0) $this->emmit($companyId, $user, $service, $value, GatewayNFE::issuerTypeProvider, GatewayNFE::clientTypeUserInstitution);
                 }    
-            }            
+            }           
             Log::error("Not Register issuer company");          
 		} catch (Exception $e) {            
 			Log::error("Get users and institutions ERROR");
@@ -105,7 +106,8 @@ class SimulateGenerateIssuerNfeJob implements ShouldQueue
             $gatewayNFE = GatewayNFE::gatewayDataStore($gatewayNFE->id, $response['data'], $value, $issuerType, $clientType);
             Log::info("Generate NFE Success");
         }else{
-            Log::info("Generate NFE Error");
+            Log::error("Generate NFE Error client", $client);
+            Log::error("Generate NFE Error gateway response", $response);
         }
     }
     
