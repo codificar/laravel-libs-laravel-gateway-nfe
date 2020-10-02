@@ -6,7 +6,7 @@
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="javascript:void(0)">{{ trans("dashboard.home") }}</a></li>
 			<li class="breadcrumb-item active">{{ trans("setting.conf") }}</li>
-			<li class="breadcrumb-item active">NF</li>
+			<li class="breadcrumb-item active">NFE</li>
 		</ol>
 	</div>
 </div>	
@@ -16,7 +16,7 @@
 <div class="col-lg-12">
 	<div class="card card-outline-info">
 		<div class="card-header">
-			<h4 class="m-b-0 text-white">Configurações Nota Fiscal</h4>
+			<h4 class="m-b-0 text-white">{{ trans("gatewayNfe::gateway_nfe.nfe_settings") }}</h4>
 			</div>
 			<div class="card-block">
 		<form enctype="multipart/form-data" method="post" data-toggle="validator" action="{{ URL::Route('saveNfeSettings') }}">		
@@ -40,7 +40,7 @@
 								<div class="col-md-8">
 									<div class="form-group">
 										<label for="usr">
-											Chave da API
+											{{ trans("gatewayNfe::gateway_nfe.api_key") }}
 											<a href="#" class="question-field" data-toggle="tooltip" title="Chave de API disponível no painel do eNotas"><span class="mdi mdi-comment-question-outline"></span></a> <span class="required-field">*</span>
 										</label>
 										<input  id="gatewayApiKey" onblur="validateKey(this.value)" type="text" class="form-control" name="nfe_gateway_api_key" required data-error="{{trans('setting.field')}}" value="{{$model->nfe_gateway_api_key->value}}">
@@ -64,34 +64,34 @@
 			<div class="panel panel-default panel-gateway" style="display: none;" id="enotasSettingPainel">		
 			
 				<div class="panel-heading">
-					<h2 class="panel-title">Configurações do eNotas</h2>
+					<h2 class="panel-title">{{ trans("gatewayNfe::gateway_nfe.enotas_settings") }}</h2>
 					<hr>
 				</div>
-				<h4 class="panel-title">Rota para o webhook: {{ URL::Route('nfeWebHook') }}</h4>
+				<h4 class="panel-title">{{ trans("gatewayNfe::gateway_nfe.webhook_rote") }}: {{ URL::Route('nfeWebHook') }}</h4>
 				<hr>
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-lg-3">
 							<div class="form-group">
-								<label for="gateway">Habilitado</label>
+								<label for="gateway">{{ trans("gatewayNfe::gateway_nfe.enable") }}</label>
 								<select class="select form-control" name="nfe_gateway_enable">
 									<option value="{{0}}" {{ $model->nfe_gateway_enable->value == "0" ? "selected" : "" }} >
-										Não
+										{{ trans("gatewayNfe::gateway_nfe.no") }}
 									</option>		
 									<option value="{{1}}" {{ $model->nfe_gateway_enable->value == "1" ? "selected" : ""}} >
-										Sim
+										{{ trans("gatewayNfe::gateway_nfe.yes") }}
 									</option>																					
 								</select>
 							</div>
 						</div>	
 
 						<div class="col-lg-3">
-							<label for="gatewayWeebHookKey">Chave para o weebhook</label>	
+							<label for="gatewayWeebHookKey">{{ trans("gatewayNfe::gateway_nfe.webhook_key") }}</label>	
 							<div class="input-group">												
 								<input id="gatewayWeebHookKey" type="email" class="form-control" name="nfe_gateway_weebhook_key" required data-error="{{trans('setting.field')}}"
 								value="{{$model->nfe_gateway_weebhook_key->value}}" readonly>
 								<div class="input-group-prepend">
-									<button onClick="generateHash()" class="p-2 btn btn-info" type="button">Gerar Chave</button>
+									<button onClick="generateHash()" class="p-2 btn btn-info" type="button">{{ trans("gatewayNfe::gateway_nfe.generate_key") }}</button>
 								</div>
 							</div>
 						</div>	
@@ -99,7 +99,7 @@
 						<div class="col-lg-3">
 							<div class="form-group">
 								<label for="usr">
-									Email para cópia das notas
+									{{ trans("gatewayNfe::gateway_nfe.mail_copy") }}
 									<a href="#" class="question-field" data-toggle="tooltip" title="Email para cópia das notas"><span class="mdi mdi-comment-question-outline"></span></a> <span class="required-field">*</span>
 								</label>
 								<input type="email" class="form-control" name="nfe_gateway_copy_email" required data-error="{{trans('setting.field')}}" value="{{$model->nfe_gateway_copy_email->value}}">
@@ -108,13 +108,13 @@
 						</div>	
 						<div class="col-lg-3">
 							<div class="form-group">
-								<label for="gateway">Ambiente do eNotas</label>
+								<label for="gateway">{{ trans("gatewayNfe::gateway_nfe.enotas_env") }}</label>
 									<select class="select form-control" name="nfe_gateway_env">
 										<option value="Producao" {{ $model->nfe_gateway_env->value == "Producao" ? "selected" : ""}} >
-											Produção
+											{{ trans("gatewayNfe::gateway_nfe.prod") }}
 										</option>	
 										<option value="Homologacao" {{ $model->nfe_gateway_env->value == "Homologacao" ? "selected" : "" }} >
-											Homologação
+											{{ trans("gatewayNfe::gateway_nfe.hom") }}
 										</option>											
 									</select>
 							</div>
@@ -186,6 +186,7 @@
 @stop
 
 @section('javascripts')
+<script src="/libs/gateway_nfe/lang.trans/gateway_nfe"> </script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/core.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/md5.js"></script>
 <script type="text/javascript">

@@ -51,9 +51,9 @@ export default {
 </script>
 <template>
   <TableFilter>
-    <h4 slot="card-title" class="m-b-0 text-white">Filtros</h4>
+    <h4 slot="card-title" class="m-b-0 text-white">{{trans('gateway_nfe.filters')}}</h4>
 
-    <h3 slot="filter-title" class="box-title">Filtrar NFEs</h3>
+    <h3 slot="filter-title" class="box-title">{{trans('gateway_nfe.filter')}} NFEs</h3>
     <div slot="filter">
       <ContentFilter
         :filter="filter"

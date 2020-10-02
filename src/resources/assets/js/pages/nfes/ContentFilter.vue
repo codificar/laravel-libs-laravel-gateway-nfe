@@ -16,10 +16,10 @@
 
       <div class="col-md-4">
         <div class="form-group">        
-            <label for="giveName"> Emitida de :</label>
+            <label for="giveName"> {{trans('gateway_nfe.emmit_by')}} :</label>
             <select v-model="filter.issuerType" name="issuerType" class="select form-control">
-                <option :value="null">Selecione</option>
-                <option value="issuer">Emitente</option>
+                <option :value="null">{{trans('gateway_nfe.select')}}</option>
+                <option value="issuer">{{trans('gateway_nfe.issuer')}}</option>
                 <option value="provider">Motoboy</option>                
             </select>
         </div>
@@ -27,33 +27,33 @@
 
       <div class="col-md-4">
         <div class="form-group">        
-          <label for="giveName"> Emitida para :</label>
+          <label for="giveName">{{trans('gateway_nfe.emmit_to')}} :</label>
            <select v-model="filter.clientType" name="clientType" class="select form-control">
-                <option :value="null">Selecione</option>
-                <option value="user">Usuario</option>
-                <option value="institution">Instituição</option>                
+                <option :value="null">{{trans('gateway_nfe.select')}}</option>
+                <option value="user">{{trans('gateway_nfe.user')}}</option>
+                <option value="institution">{{trans('gateway_nfe.institution')}}</option>                
             </select>
         </div>
       </div> 
 
       <div class="col-md-2">
         <div class="form-group">        
-          <label for="giveName">Data Inical</label>
+          <label for="giveName">{{trans('gateway_nfe.start_date')}}</label>
           <input
             v-model="filter.startDate"
             type="date"
             class="form-control"
-            placeholder="Data Inicial"
+            :placeholder="trans('gateway_nfe.start_date')"
           />    
           <br/>  
-          <span>Até</span>
+          <span>{{trans('gateway_nfe.btween')}}</span>
           <br/>
-          <label for="giveName">Data Final</label>
+          <label for="giveName">{{trans('gateway_nfe.end_date')}}</label>
            <input
             v-model="filter.endDate"
             type="date"
             class="form-control"
-            placeholder="Data Final"
+            :placeholder="trans('gateway_nfe.end_date')"
           />
         </div>
       </div>   
@@ -67,7 +67,7 @@
         type="button"
         value="clean"
       >
-        <i class="fa fa-trash"></i> Limpar Filtros
+        <i class="fa fa-trash"></i>{{trans('gateway_nfe.clean_filters')}}
       </button>
     </div>
 
@@ -78,7 +78,7 @@
         type="button"
         value="Filter_Data"
       >
-        <i class="fa fa-search"></i> {{ trans("dashboard.search") }}
+        <i class="fa fa-search"></i>{{trans('gateway_nfe.search')}}
       </button>
     </div>
   </div>

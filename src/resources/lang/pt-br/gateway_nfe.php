@@ -43,4 +43,46 @@ return [
 	//Issuer
 	"document_company_required" 		=> "Documento é obrigatório",
 	"document_company_unique" 			=> "Documento já cadastrado",
+
+	//NFE List
+	"filter" 			=> "Filtrar",
+	"filters" 			=> "Filtros",
+	"clean_filters" 	=> "Limpar Filtros",
+	"search" 			=> "Pesquisar",
+
+	"issuer" 			=> "Emitente",
+	"user" 				=> "Usuario",
+	"institution" 		=> "Instituição",
+
+	"select" 			=> "Selecionar",
+	"emmit_by" 			=> "Emitida de",
+	"emmit_to" 			=> "Emitida para",
+
+	"start_date" 		=> "Data Inicial",
+	"btween" 			=> "Até",
+	"end_date" 			=> "Data Final",
+
+	"unassigned" 		=> "Não atribuido",
+	"status_reason" 	=> "MOTIVO DO STATUS",
+	"emmit_by_title" 	=> "EMITIDA DE",
+	"emmit_to_title" 	=> "EMITIDA PARA",
+	"value" 			=> "VALOR",
+	"emission_date" 	=> "DATA DE EMISSÃO",
+	"view_pdf" 			=> "Vizualiar PDF",
+
+	//Settings
+	"nfe_settings" 		=> "Configurações Nota Fiscal",
+	"api_key" 			=> "Chave da API",
+	"enotas_settings" 	=> "Configurações Nota Fiscal",
+	"webhook_rote" 		=> "Rota para o webhook",
+	"enable" 			=> "Habilitado",
+	"yes" 				=> "Sim",
+	"no" 				=> "Não",
+	"webhook_key" 			=> "Chave para o weebhook",
+	"generate_key" 		=> "Gerar Chave",
+	"mail_copy" 		=> "Email para cópia das notas",
+	"enotas_env" 		=> "Ambiente do eNotas",
+	"prod" 		=> "Produção",
+	"hom" 		=> "Homologação",
+
 ];
