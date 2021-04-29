@@ -51,16 +51,17 @@ class ProviderCompanyFormRequest extends FormRequest {
 
 	public function messages() {
 		$return = [
-			'provider_id.required' => trans('user_provider_controller.provider_id_required'),
-			'document.required' => trans('user_provider_controller.document_company_required'),	
-			'document.unique' => trans('user_provider_controller.document_company_unique'),	
+			'provider_id.required' => trans('gatewayNfe::gateway_nfe.provider_id_required'),
+			
+			'document.required' => trans('gatewayNfe::gateway_nfe.document_company_required') ,	
+			'document.unique' => trans('gateway_nfe.document_company_unique'),	
 
-			'municipalRegistration.required' => trans('user_provider_controller.municipal_registration'),
-			'fantasyName.required' => trans('user_provider_controller.nome_fantasia'),
-			'nationalSimpleOptant.required' => trans('user_provider_controller.optante_nacional'),
-			'culturalPromoter.required' => trans('user_provider_controller.culturalPromoter'),
-			'socialReason.required' => trans('user_provider_controller.razao_social'),						
-			'address.required' => trans('user_provider_controller.address_neighbour_required')			
+			'municipalRegistration.required' => trans('gatewayNfe::gateway_nfe.municipal_register_required'),
+			'fantasyName.required' => trans('gatewayNfe::gateway_nfe.fantasy_name_required'),
+			'nationalSimpleOptant.required' => trans('gatewayNfe::gateway_nfe.nacional_optant_required'),
+			'culturalPromoter.required' => trans('gatewayNfe::gateway_nfe.cultural_promter_required'),
+			'socialReason.required' => trans('gatewayNfe::gateway_nfe.social_reason_required'),						
+			'address.required' => trans('gatewayNfe::gateway_nfe.address_title_required')		
 		];
 
 		return $return;
