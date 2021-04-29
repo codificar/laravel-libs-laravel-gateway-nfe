@@ -85,4 +85,34 @@ return [
 	"prod" => "Producción",
 	"hom" => "Homologación",
 
+	'address_title_required' => 'Preencha Endereço',
+	'social_reason_required' => 'Preencha Razão social',
+	'fantasy_name_required' => 'Preencha Nome fantasia',
+	'municipal_register_required' => 'Preencha Inscrição municipal',
+	'estate_register_required' => 'Preencha Inscrição Estadual',
+	'commercial_phone_required' => 'Preencha Telefone comercial',
+	'nacional_optant_required' => 'Preencha Optante simples nacional',
+	'cultural_promter_required' => 'Preencha Incentivador Cultural',
+
+	'provider_id_required' => 'Preencha ID do prestador',
+	'ibge_code_not_found' => 'ID del IBGE no encontrado',
+
+	"address_required" => "Endereço é obrigatório",
+	"address_city_required" => "Cidade é obrigatória",
+	"address_country_required" => "País é obrigatório",
+	"address_number_required" => "Número é obrigatório",
+	"address_number_numeric" => "O campo número só aceita valores numéricos",
+	"address_state_required" => "Estado é obrigatória",
+	"address_neighbour_required" => "Bairro é obrigatório",
+
+	"note_description" => "Descrição do serviço na nota",
+	"motoboy_nfe_emmit_date" => "Dia do mês da emissão de NFE dos Motoboys",
+	"system_nfe_emmit_date" => "Dia do mês da emissão de NFE do Sistema",
+
+	"note_description_title" => "Texto que vai ser usado como descrição do serviço na nota",
+	"motoboy_nfe_emmit_date_title" => "Dia no mês de emissão das notas dos Motoboy",
+	"system_nfe_emmit_date_title" => "Dia no mês de emissão das notas do Sistema",
+
+	"link_title" => "Vincular"
+
 ];

@@ -47,14 +47,15 @@ class ProviderCompanyAddressFormRequest extends FormRequest {
 
 	public function messages() {
 		$return = [
-			'provider_id.required' => trans('user_provider_controller.provider_id_required'),
-			'ibgeCode.required' => "IBGE code Not Found",
-			'neighborhood.required' => trans('user_provider_controller.address_neighbour_required'),
-			'zipcode.required' => trans('user_provider_controller.zipcode'),
-			'city.required' => trans('user_provider_controller.address_city_required'),			
-			'place.required' => trans('user_provider_controller.address_neighbour_required'),
-			'number.required' => trans('user_provider_controller.address_number_required'),
-			'estate.required' => trans('user_provider_controller.address_state_required')
+			'provider_id.required' => trans('gatewayNfe::gateway_nfe.provider_id_required') ,	
+
+			'ibgeCode.required' => trans('gatewayNfe::gateway_nfe.ibge_code_not_found'),
+			'neighborhood.required' => trans('gatewayNfe::gateway_nfe.address_neighbour_required'),
+			'zipcode.required' => trans('gatewayNfe::gateway_nfe.zipcode'),
+			'city.required' => trans('gatewayNfe::gateway_nfe.address_city_required'),			
+			'place.required' => trans('gatewayNfe::gateway_nfe.address_neighbour_required'),
+			'number.required' => trans('gatewayNfe::gateway_nfe.address_number_required'),
+			'estate.required' => trans('gatewayNfe::gateway_nfe.address_state_required')	
 			
 		];
 

@@ -1,0 +1,60 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "4156a271764ceda88e135988cbc96fe3",
+    "packages": [
+        {
+            "name": "enotas/php-client",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eNotasGW/php-client.git",
+                "reference": "861c13ef1162e4479bf9a8ad415948681c969994"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eNotasGW/php-client/zipball/861c13ef1162e4479bf9a8ad415948681c969994",
+                "reference": "861c13ef1162e4479bf9a8ad415948681c969994",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "eNotasGW\\Api\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "eNotas Gateway",
+                    "email": "suporte@enotasgw.com.br"
+                }
+            ],
+            "description": "eNotas GW API client for PHP",
+            "homepage": "https://github.com/eNotasGW/php-client",
+            "keywords": [
+                "eNotas",
+                "nfs-e"
+            ],
+            "time": "2019-01-10T17:53:17+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
+}

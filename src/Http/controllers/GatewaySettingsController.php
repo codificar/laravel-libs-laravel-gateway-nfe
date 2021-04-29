@@ -31,7 +31,7 @@ class GatewaySettingsController extends Controller
 		$list = NFESettings::where('category', $setting)->get();
 		$model = $this->getViewModel($list);
 		
-		$title = ucwords(trans('customize.Settings'));
+		$title = ucwords(trans('gatewayNfe::gateway_nfe.settings_title'));
 	
 		return View::make('gateway_nfe::settings.gateway') 			
 			->with('title', $title)
@@ -68,7 +68,7 @@ class GatewaySettingsController extends Controller
 		if($request)
 			return true;
 
-		$alert = array('class' => 'success', 'msg' => trans('dashboard.settings_saved'));
+		$alert = array('class' => 'success', 'msg' => trans('gatewayNfe::gateway_nfe.save_settings'));
 
 		return Redirect::to(URL::Route('NfeGatewaySettings'))->with('alert', $alert);
 	}

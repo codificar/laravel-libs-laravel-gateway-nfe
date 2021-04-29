@@ -85,4 +85,37 @@ return [
 	"prod" => "Production",
 	"hom" => "Homologation",
 
+	"settings_title" => "Configurações",
+	"address_title" => "Straighten",
+	"save_settings" => "Configurações Salvas",
+
+	'address_title_required' => 'Preset Straighten',
+	'social_reason_required' => 'Preencha Razão social',
+	'fantasy_name_required' => 'Preencha Nome fantasia',
+	'municipal_register_required' => 'Preencha Encrição municipal',
+	'estate_register_required' => 'Preencha Encrição Estadual',
+	'commercial_phone_required' => 'Preencha Telefone comercial',
+	'nacional_optant_required' => 'Preencha Optante simple national',
+	'cultural_promter_required' => 'Preencha Cultural Incentivator',
+
+	'provider_id_required' => 'Preset provider ID',
+	'ibge_code_not_found' => 'IBGE ID not found',
+
+	"address_required" => "Endereço é obrigatório",
+	"address_city_required" => "Cidade é obrigatória",
+	"address_country_required" => "Country é obrigatório",
+	"address_number_required" => "Number and obrigatório",
+	"address_number_numeric" => "Or number field only oil numeric values",
+	"address_state_required" => "Estado é obrigatória",
+	"address_neighbour_required" => "Bairro é obrigatório",
+
+	"note_description" => "Descrição do serviço na nota",
+	"motoboy_nfe_emmit_date" => "Day of the month of the issuance of NFE two Motoboys",
+	"system_nfe_emmit_date" => "Day of the month of issuance of NFE do Sistema",
+
+	"note_description_title" => "Text that will be used as a description of the note service",
+	"motoboy_nfe_emmit_date_title" => "Day no more than the issuance of two Motoboy notes",
+	"system_nfe_emmit_date_title" => "Day no more than issuance of system notes",
+
+	"link_title" => "Link"
 ];

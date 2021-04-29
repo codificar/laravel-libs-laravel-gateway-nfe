@@ -109,6 +109,7 @@ return [
 	"address_state_required" 			=> "Estado é obrigatória",
 	"address_neighbour_required" 		=> "Bairro é obrigatório",
 
+
 	"note_description" 					=> "Descrição do serviço na nota",
 	"motoboy_nfe_emmit_date" 			=> "Dia do mês da emissão de NFE dos Motoboys",
 	"system_nfe_emmit_date" 			=> "Dia do mês da emissão de NFE do Sistema",

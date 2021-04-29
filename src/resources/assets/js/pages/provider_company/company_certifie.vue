@@ -203,7 +203,7 @@ export default {
                 type="button"
                 class="btn btn-success"
               >
-                Vincular
+                {{trans('gatewayNfe::gateway_nfe.link_title') }}
               </button>
             </div>
           </div>
@@ -292,7 +292,7 @@ export default {
                 type="button"
                 class="btn btn-success"
               >
-                Vincular
+                {{trans('gatewayNfe::gateway_nfe.link_title') }}
               </button>
             </div>
           </div>

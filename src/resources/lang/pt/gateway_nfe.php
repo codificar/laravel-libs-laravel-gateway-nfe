@@ -118,4 +118,5 @@ return [
 	"system_nfe_emmit_date_title" 			=> "Dia no mês de emissão das notas do Sistema",
 
 	"link_title" 			=> "Vincular"
+
 ];
