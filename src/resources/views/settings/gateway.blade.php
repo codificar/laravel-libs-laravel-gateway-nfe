@@ -62,8 +62,8 @@
 			
 			
 			<div class="panel panel-default panel-gateway" style="display: none;" id="enotasSettingPainel">		
-			
-				<div class="panel-heading">
+				
+			<div class="panel-heading">
 					<h2 class="panel-title">{{ trans("gatewayNfe::gateway_nfe.enotas_settings") }}</h2>
 					<hr>
 				</div>
@@ -125,8 +125,8 @@
 					<div class="col-lg-3">
 							<div class="form-group">
 								<label for="usr">
-									Descrição do serviço na nota
-									<a href="#" class="question-field" data-toggle="tooltip" title="Texto que vai ser usado como descrição do serviço na nota"><span class="mdi mdi-comment-question-outline"></span></a> <span class="required-field">*</span>
+									{{trans('gatewayNfe::gateway_nfe.note_description') }}
+									<a href="#" class="question-field" data-toggle="tooltip" title="{{trans('gatewayNfe::gateway_nfe.note_description_title') }}"><span class="mdi mdi-comment-question-outline"></span></a> <span class="required-field">*</span>
 								</label>
 								<input min="1" max="255" type="text" class="form-control" name="nfe_gateway_service_description" required data-error="{{trans('setting.field')}}" value="{{$model->nfe_gateway_service_description->value}}">
 								<div class="help-block with-errors"></div>
@@ -135,8 +135,8 @@
 						<div class="col-lg-3">
 							<div class="form-group">
 								<label for="usr">
-									Dia do mês da emissão de NFE dos Motoboys
-									<a href="#" class="question-field" data-toggle="tooltip" title="Dia no mês de emissão das notas dos Motoboy"><span class="mdi mdi-comment-question-outline"></span></a> <span class="required-field">*</span>
+									{{trans('gatewayNfe::gateway_nfe.motoboy_nfe_emmit_date') }}
+									<a href="#" class="question-field" data-toggle="tooltip" title="{{trans('gatewayNfe::gateway_nfe.motoboy_nfe_emmit_date_title') }}"><span class="mdi mdi-comment-question-outline"></span></a> <span class="required-field">*</span>
 								</label>
 								<input min="1" max="31" type="number" class="form-control" name="nfe_gateway_provider_emission_day" required data-error="{{trans('setting.field')}}" value="{{$model->nfe_gateway_provider_emission_day->value}}">
 								<div class="help-block with-errors"></div>
@@ -145,8 +145,8 @@
 						<div class="col-lg-3">
 							<div class="form-group">
 								<label for="usr">
-									Dia do mês da emissão de NFE do Sistema
-									<a href="#" class="question-field" data-toggle="tooltip" title="Dia no mês de emissão das notas do Sistema"><span class="mdi mdi-comment-question-outline"></span></a> <span class="required-field">*</span>
+									{{trans('gatewayNfe::gateway_nfe.system_nfe_emmit_date') }}
+									<a href="#" class="question-field" data-toggle="tooltip" title="{{trans('gatewayNfe::gateway_nfe.system_nfe_emmit_date_title') }}"><span class="mdi mdi-comment-question-outline"></span></a> <span class="required-field">*</span>
 								</label>
 								<input min="1" max="31" type="number" class="form-control" name="nfe_gateway_issuer_emission_day" required data-error="{{trans('setting.field')}}" value="{{$model->nfe_gateway_issuer_emission_day->value}}">
 								<div class="help-block with-errors"></div>

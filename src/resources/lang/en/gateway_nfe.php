@@ -109,4 +109,13 @@ return [
 	"address_state_required" => "Estado é obrigatória",
 	"address_neighbour_required" => "Bairro é obrigatório",
 
+	"note_description" => "Descrição do serviço na nota",
+	"motoboy_nfe_emmit_date" => "Day of the month of the issuance of NFE two Motoboys",
+	"system_nfe_emmit_date" => "Day of the month of issuance of NFE do Sistema",
+
+	"note_description_title" => "Text that will be used as a description of the note service",
+	"motoboy_nfe_emmit_date_title" => "Day no more than the issuance of two Motoboy notes",
+	"system_nfe_emmit_date_title" => "Day no more than issuance of system notes",
+
+	"link_title" => "Link"
 ];
