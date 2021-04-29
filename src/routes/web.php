@@ -1,6 +1,6 @@
 <?php
 //Admin
-// Route::group(['middleware' => 'auth.admin'], function(){	
+Route::group(['middleware' => 'auth.admin'], function(){	
 Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Controllers'], function(){	
 
     Route::group(['prefix' => '/simulate/nfe'], function(){ 
@@ -54,7 +54,7 @@ Route::group(['prefix' => '/admin', 'namespace' => 'Codificar\GatewayNfe\Http\Co
         Route::post('/nfe', array('as' => 'adminGetNfe', 'uses' => 'ProviderCompanyController@getNfe'));
     });	
 });
-// });
+});
 
 Route::group(['namespace' => 'Codificar\GatewayNfe\Http\Controllers', 'prefix' => '/api/v1/libs/gatewaynfe/weebhook'], function () {  
     Route::post('/', array('as' => 'nfeWebHook', 'uses' => 'GatewayNFEController@WeebHookStore'));
