@@ -431,7 +431,7 @@ export default {
                       <label class="control-label">CNPJ*</label>
                       <the-mask
                         v-model="company.document"
-                        :mask="'##.###.###/###-#'"
+                        :mask="'##.###.###/####-##'"
                         @blur.native="validateCnpj()"
                         name="company_document"
                         type="text"
