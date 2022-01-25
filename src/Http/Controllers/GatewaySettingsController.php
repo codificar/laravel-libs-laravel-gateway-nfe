@@ -20,6 +20,12 @@ use Codificar\GatewayNfe\Jobs\GenerateProviderNfeJob;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
 
+use Codificar\GatewayNfe\Models\{
+	ModelObjectSettings,
+	ApplicationSettingsViewModel
+};
+
+
 
 class GatewaySettingsController extends Controller
 {	

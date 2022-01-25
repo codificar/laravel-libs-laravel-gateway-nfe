@@ -135,7 +135,7 @@ class NFESettings extends Settings
 	}
 
 
-	public function getIssuerData()
+	public static function getIssuerData()
 	{
 		return [
 			'name' => self::findByKey('issuer_name'),
@@ -148,37 +148,37 @@ class NFESettings extends Settings
 		];
 	}
 	// Issuer Set Settings
-	public function setIssuerName($value)
+	public static function setIssuerName($value)
 	{
 		Settings::where('key', 'issuer_name')->update(['value' => $value]);
 	}
 
-	public function setIssuerDocument($value)
+	public static function setIssuerDocument($value)
 	{
 		Settings::where('key', 'issuer_document')->update(['value' => $value]);
 	}
 
-	public function setIssuerZipcode($value)
+	public static function setIssuerZipcode($value)
 	{
 		Settings::where('key', 'issuer_zipcode')->update(['value' => $value]);
 	}
 
-	public function setIssuerAddress($value)
+	public static function setIssuerAddress($value)
 	{
 		Settings::where('key', 'issuer_address')->update(['value' => $value]);
 	}
 
-	public function setIssuerEmail($value)
+	public static function setIssuerEmail($value)
 	{
 		Settings::where('key', 'issuer_email')->update(['value' => $value]);
 	}
 
-	public function setIssuerSite($value)
+	public static function setIssuerSite($value)
 	{
 		Settings::where('key', 'issuer_site')->update(['value' => $value]);
 	}
 
-	public function setIssuerPhone($value)
+	public static function setIssuerPhone($value)
 	{
 		Settings::where('key', 'issuer_phone')->update(['value' => $value]);
 	}

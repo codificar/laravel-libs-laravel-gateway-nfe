@@ -154,7 +154,7 @@ class Company extends Eloquent
      * @param String   $commercialPhone Default null	
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function updateCompany($request, $owner = Company::ownerProvider){
+	public static function updateCompany($request, $owner = Company::ownerProvider){
 		
 		if($owner == Company::ownerIssuer){
 			$providerCompany = Company::where("owner", Company::ownerIssuer)->first();
@@ -258,7 +258,7 @@ class Company extends Eloquent
 		* @return Email    $commercialEmail Default Null
 		* @return String   $commercialPhone Default null		
 	*/
-	public function getIssuerCompany(){
+	public static function getIssuerCompany(){
 		$request = Company::where("owner", self::ownerIssuer)->first();
 				
 		if($request){			

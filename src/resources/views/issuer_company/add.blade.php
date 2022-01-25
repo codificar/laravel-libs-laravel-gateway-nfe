@@ -44,7 +44,7 @@
 
 <script src="/libs/gateway_nfe/lang.trans/gateway_nfe"></script> 
 
-<script src="{{ elixir('vendor/codificar/gateway_nfe/gateway_nfe.vue.js') }}"> </script> 
+<script src="{{ asset('vendor/codificar/gateway_nfe/gateway_nfe.vue.js') }}"> </script> 
        
 @stop
 

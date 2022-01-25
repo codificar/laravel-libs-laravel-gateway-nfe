@@ -75,6 +75,7 @@ Route::group(['prefix' => '/api/v1/libs/gatewaynfe/provider/company', 'middlewar
  * Rota para permitir utilizar arquivos de traducao do laravel (dessa lib) no vue js
  */
 Route::get('/libs/gateway_nfe/lang.trans/{file}', function () {
+    app("debugbar")->disable();
     $fileNames = explode(',', Request::segment(4));
     $lang = config('app.locale');
     $files = array();
