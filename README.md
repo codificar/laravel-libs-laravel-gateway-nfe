@@ -3,11 +3,8 @@ A gateway nfe library for laravel.
 Uma bibliotéca para implementar gateways de NFE
 
 ## Prerequisites
-- 1º: Add the "enotas/php-client" library before install this library.
-```
-"enotas/php-client": "^1.0",
-```
-- 2º: These middwares are needed:
+
+- These middwares are needed:
 - If your project does not have some of these middleware, it is necessary to add them.
 ```
 auth.admin
@@ -24,57 +21,51 @@ User
 ```
 
 ## Getting Started
-- In root of your Laravel app in the composer.json add this code to clone the project:
 
-```
+Add in composer.json:
 
+```php
 "repositories": [
-		{
-			"type":"package",
-			"package": {
-			  "name": "codificar/gatewaynfe",
-			  "version":"master",
-			  "source": {
-				  "url": "https://libs:ofImhksJ@git.codificar.com.br/laravel-libs/laravel-gateway-nfe.git",
-				  "type": "git",
-				  "reference":"master"
-				}
-			}
-		}
-	],
-
-// ...
-
-"require": {
-    // ADD this
-    "codificar/withdrawals": "dev-master",
-},
-
-```
-- If you want add a specific version (commit, tag or branch), so add like this:
-```
-"codificar/gatewaynfe": "dev-master",
-```
-- Now add 
+    {
+        "type": "vcs",
+        "url": "https://libs:ofImhksJ@git.codificar.com.br/laravel-libs/laravel-gateway-nfe.git"
+    }
+]
 ```
 
+```php
+require:{
+        "codificar/gatewaynfe": "0.1.0",
+}
+```
+
+```php
 "autoload": {
-        //...
-        "psr-4": {
-            // Add your Lib here
-           "Codificar\\GatewayNfe\\": "vendor/codificar/gatewaynfe/src",
-            //...
-        }
-    },
-    //...
+    "psr-4": {
+        "Codificar\\GatewayNfe\\": "vendor/codificar/gatewaynfe/src/"
+    }
+}
 ```
-- Dump the composer autoloader
+Update project dependencies:
 
+```shell
+$ composer update
 ```
-composer dump-autoload -o
+
+Register the service provider in `config/app.php`:
+
+```php
+'providers' => [
+  /*
+   * Package Service Providers...
+   */
+  Codificar\GatewayNfe\GatewayNfeServiceProvider::class,
+],
 ```
+
 
 Check if has the laravel publishes in composer.json with public_vuejs_libs tag:
+
 ```
     "scripts": {
         //...
@@ -84,26 +75,21 @@ Check if has the laravel publishes in composer.json with public_vuejs_libs tag:
 	},
 ```
 
-- Next, we need to add our new Service Provider in our `config/app.php` inside the `providers` array:
+Or publish by yourself
 
+
+Publish Js Libs and Tests:
+
+```shell
+$ php artisan vendor:publish --tag=public_vuejs_libs --force
 ```
-'providers' => [
-         ...,
-            // The new package class
-            Codificar\GatewayNfe\GatewayNfeServiceProvider::class,
-        ],
-```
+
 - Migrate the database tables
 
-```
+```shell
 php artisan migrate
 ```
 
-And finally, start the application by running:
-
-```
-php artisan serve
-```
 
 ## Admin Issuer (web)
 | Type  | Return | Route  | Description |
