@@ -13,7 +13,7 @@ class insertSettings extends Migration
      */
     public function up()
     {
-        Settings::updateOrCreate(
+        \Settings::updateOrCreate(
             ['category' => 10, 'key' => 'nfe_gateway_api_key'],
             [
                 'key' => 'nfe_gateway_api_key',
@@ -25,7 +25,7 @@ class insertSettings extends Migration
             ]
         );
 
-        Settings::updateOrCreate(
+        \Settings::updateOrCreate(
             ['category' => 10, 'key' => 'nfe_gateway_env'],
             [
                 'key' => 'nfe_gateway_env',
@@ -37,7 +37,7 @@ class insertSettings extends Migration
             ]
         );
 
-        Settings::updateOrCreate(
+        \Settings::updateOrCreate(
             ['category' => 10, 'key' => 'nfe_gateway_env'],
             [
                 'key' => 'nfe_gateway_env',
@@ -49,7 +49,7 @@ class insertSettings extends Migration
             ]
         );
 
-        Settings::updateOrCreate(
+        \Settings::updateOrCreate(
             ['category' => 10, 'key' => 'nfe_gateway_service_description'],
             [
                 'key' => 'nfe_gateway_service_description',
@@ -61,7 +61,7 @@ class insertSettings extends Migration
             ]
         );
 
-        Settings::updateOrCreate(
+        \Settings::updateOrCreate(
             ['category' => 10, 'key' => 'nfe_gateway_provider_emission_day'],
             [
                 'key' => 'nfe_gateway_provider_emission_day',
@@ -73,7 +73,7 @@ class insertSettings extends Migration
             ]
         );
 
-        Settings::updateOrCreate(
+        \Settings::updateOrCreate(
             ['category' => 10, 'key' => 'nfe_gateway_issuer_emission_day'],
             [
                 'key' => 'nfe_gateway_issuer_emission_day',
@@ -85,7 +85,7 @@ class insertSettings extends Migration
             ]
         );
 
-        Settings::updateOrCreate(
+        \Settings::updateOrCreate(
             ['category' => 10, 'key' => 'nfe_gateway_copy_email'],
             [
                 'key' => 'nfe_gateway_copy_email',
@@ -97,7 +97,7 @@ class insertSettings extends Migration
             ]
         );
 
-        Settings::updateOrCreate(
+        \Settings::updateOrCreate(
             ['category' => 10, 'key' => 'nfe_gateway_enable'],
             [
                 'key' => 'nfe_gateway_enable',
@@ -109,7 +109,7 @@ class insertSettings extends Migration
             ]
         );
 
-        Settings::updateOrCreate(
+        \Settings::updateOrCreate(
             ['category' => 10, 'key' => 'nfe_gateway_weebhook_key'],
             [
                 'key' => 'nfe_gateway_weebhook_key',
