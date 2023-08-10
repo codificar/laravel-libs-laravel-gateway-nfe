@@ -38,7 +38,7 @@ class Company extends Eloquent
 	 * @param enum 		(provider, issuer)  $owner
 	 * @return \Illuminate\Http\JsonResponse
 	 */
-	public function store($request, $owner = Company::ownerProvider){
+	public static function store($request, $owner = Company::ownerProvider){
 
 		
 		$providerCompany = new Company;
